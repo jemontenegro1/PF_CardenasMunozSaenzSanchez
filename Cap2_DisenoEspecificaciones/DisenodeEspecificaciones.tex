@@ -1,0 +1,232 @@
+%%%%%   Capitulo 2 : Diseño de Especificaciones    %%%%%
+\chapter{Definición de Especificaciones}
+
+%%%%%   Revisión del Estado del Arte y de la Técnica    %%%%%
+\section{Revisión del Estado del Arte y de la Técnica}
+En la definición de las especificación necesarias para la máquina herramienta se procedió a una revisión dentro la literatura, las soluciones comerciales y las patentes creadas en base a esta temática. Por esto, este sección presentará lo encontrado en estos aspectos.
+
+%%%%%   Estado del Arte    %%%%%
+\subsection{Estado del Arte}
+En las últimas décadas, la industria manufacturera ha sido beneficiada por las desarrollados alcanzados en la industria robótica, que han permitido una modernización de los procesos de manufactura, alcanzando altas prestaciones en cuanto a capacidad dinámica, rigidez, precisión \citep{serje2017parallel} así como en flexibilidad, eficiencia, bajo costo y seguridad \citep{yuan2018review,stipanvcic2012programming,vsvaco2014calibration}. La robótica no solo ha llamado la atención de la industria manufacturera, sino también a investigadores y académicos, esto es mostrado en la Figura \ref{fig:PublicacionesPorAnio}, donde se muestra el número de publicaciones con palabras clave “robótica” en Scopus \citep{yuan2018review}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Cap2_DisenoEspecificaciones/Figura/PublicacionesPorAnio.eps}
+    \caption{Publicaciones por año}{Fuente:\citep{yuan2018review}}
+    \label{fig:PublicacionesPorAnio}
+\end{figure}
+
+\subsubsection{Robot Herramienta Serial}
+
+La industria de la robótica ha dejado a un lado los mecanismos convencionales para las máquinas herramientas, ver Figura \ref{fig:CartesianMachiningTool}, para utilizar una arquitectura serial, o de lazo abierto,  la cual consiste por una serie de eslabones unidos mediante juntas que permiten el movimiento relativo, ver Figura \ref{fig:MachiningSerialRobot}. Los primeras investigaciones sobre estos datan a inicios de los años 90’s, y desde entonces han sido intensamente investigado alrededor del mundo por su potencial de ser aplicado en distintos procesos de maquinado y manufactura \citep{chen2013robot}. Estas investigaciones abarcan temas como el diseño \citep{denkena2017design}, análisis de condición cinemática \citep{zargarbashi2012jacobian}, análisis de rigidez por su postura \citep{guo2015stiffness}, la utilización de redundancias [11], y el control de los mismo [12].
+
+\begin{figure}[ht!]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Cap2_DisenoEspecificaciones/Figura/CartesianMachiningTool.pdf}
+        \caption{Máquina Herramienta Cartesiana}{Fuente:\citep{szipka2018measurement}}
+        \label{fig:CartesianMachiningTool}
+    \end{subfigure}
+     \begin{subfigure}{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{Cap2_DisenoEspecificaciones/Figura/MachiningSerialRobot.pdf}
+        \caption{Robot Herramienta Serial}{Fuente:\citep{mejri2016dynamic}}
+        \label{fig:MachiningSerialRobot}
+    \end{subfigure}
+    \caption{Comparación de Maquina herramienta y Robot herramienta}
+\end{figure}
+
+En el diseño de robot seriales, \cite{denkena2017design} en su trabajo \enquote{Design and optimization of a machining robot} explica que para los robots seriales presentan una serie de debilidades y limitaciones frente a las máquinas herramientas convencionales. Siendo que la principal limitación es la rigidez del robot, debido a que es inferior si es comparada con las máquinas convencionales, y es importante en la precisión de la trayectoria a seguir así como en la productividad del mismo. Por esto, los autores antes de realizar el diseño detallado y optimización del robot, realizan una evaluación cinemática de los conceptos de máquinas, mostrando que esta desventaja puede ser eliminada utilizando una cinemática adaptada con menor número de juntas, ver Figura \ref{fig:07ConceptEvaluation}.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Cap2_DisenoEspecificaciones/Figura/07ConceptEvaluation.pdf}
+    \begin{tabular}[c]{p{0.2\textwidth} | m{0.2\textwidth} | m{0.2\textwidth} | m{0.2\textwidth} |}
+         & Cinemática serial con solo juntas rotatorias & Cinemática serial guiada lineal & Cinemática serial con mesa lineal giratoria \\ \hline
+        Rigidez & $\ominus$ & $\oplus$ &  $\oplus \oplus$ \\ \hline
+        Modo Normal & $\ominus$ & $\oplus$ &  $\oplus \oplus$ \\ \hline
+        Espacio & $\oplus$ & $\oplus$ & $\ominus$ \\ 
+        de Instalación & & & \\ \hline
+        Costo & $\oplus \oplus$ & $\oplus$ &  $\ominus \ominus$ \\ \hline
+    \end{tabular}
+    \caption{Conceptos de Robots seriales}{Fuente:\citep{denkena2017design}}
+    \label{fig:07ConceptEvaluation}
+\end{figure}
+
+Por otra parte, en el análisis de condición cinemática, \cite{zargarbashi2012jacobian} en \enquote{The Jacobian condition number as a dexterity index in 6R machining robots} detalla sobre la utilización de un número de condición basado en el jacobiano como índice de desempeño. Teniendo en cuenta que este índice no tendría en cuenta los efectos dinámicos debido a las condiciones de trabajo durante el maquinado, siendo bajas velocidades, los efectos del husillo afectan la estructura y los altos modos de frecuencia del sistema. El número de condición trabaja teniendo en cuenta un pequeño error en las juntas, $\delta\dot\theta$, que produce un error en movimiento del efector, $\delta t$; recordando que las velocidades de estos elementos se relacionan a través de la matriz jacobiana, Ecuación \ref{Eq:IOVelocityEquation}, y que la inducción de este error en la posición, $\delta\theta$, afecta igualmente al jacobiano, $J\left(\theta + \delta\theta \right)$, sin embargo, puede ser aproximado de la siguiente manera $J\left(\theta + \delta\theta \right) \approx J\left(\theta\right)$. Por lo que los errores de velocidades pueden ser expresados por la Ecuación \ref{Eq:ErrorIOEquation}, simplificados de la forma Ecuación \ref{Eq:SimpleErrorIOEquation}, y en base a esto, el número de condición se obtiene relacionando la ecuación \ref{Eq:SimpleErrorIOEquation} con la ecuación \ref{Eq:IOVelocityEquation}, ver ecuaciones \ref{Eq:ConditionEquation} y \ref{Eq:ConditionExpression}. El número de condición manejaría valores entre $1$ y $\infty$, siendo que entre más pequeño el número de condición más uniforme será el cambio de las juntas sobre el efector.
+
+\begin{subequations}
+    \begin{eqnarray}
+        \dot\theta = J^{-1}\left(\theta\right) t \label{Eq:IOVelocityEquation} \\
+        \dot\theta + \delta\dot\theta = J^{-1}\left(\theta\right) \left(t + \delta t\right) \label{Eq:ErrorIOEquation} \\
+        \delta\dot\theta = J^{-1}\left(\theta\right) \delta t \label{Eq:SimpleErrorIOEquation} \\
+        \frac{\left\lVert \delta\dot\theta \right\rVert}{\left\lVert \dot\theta \right\rVert} \leq \kappa\left( J \right) \frac{\left\lVert \delta t \right\rVert}{\left\lVert t\right\rVert} \label{Eq:ConditionEquation} \\
+        \kappa\left(J\right) = \left\lVert J\left(\theta\right) \right\rVert \cdot \left\lVert J^{-1}\left(\theta\right) \right\rVert \label{Eq:ConditionExpression}
+    \end{eqnarray}
+\end{subequations}
+
+En el análisis de rigidez, el \cite{guo2015stiffness} y su artículo \enquote{Stiffness-oriented posture optimization in robotic machining applications} especifica un método optimización de postura de un robot serial que apunta a incrementar su rigidez, debido a que estos robots presentan múltiples soluciones para una posición del efector final \citep{zhu2013off}, como el ejemplo donde un robot de taladrado para un punto y dirección de un agujero no aplica una única pose, en la Figura \ref{fig:13OnePointTwoPoses} se muestra dos posibles poses del efector para taladrar un mismo agujero. Por eso, \cite{guo2015stiffness} mediante la utilización del modelo de rigidez del robot para seleccionar dentro de todas las poses posibles la que más óptima, es decir aquella que maximice la rigidez del sistema.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=0.7\textwidth]{Cap2_DisenoEspecificaciones/Figura/13OnePointTwoPoses.pdf}
+    \caption{Multipes poses para un mismo punto}{Fuente:\citep{zhu2013off}}
+    \label{fig:13OnePointTwoPoses}
+\end{figure}
+
+En la implementación de redundancias, \cite{subrin2013new} para su investigación \enquote{New redundant architectures in machining: serial and parallel robots} evalua el desempeño de una arquitectura redundante de robot serial, observando como la implementación de lazo cerrado mejora el rendimiento cinemático como el rendimiento de rigidez de un manipulador serial.
+
+Para la calibración y control de los robots seriales, \cite{andres2011calibration} en trabajo \enquote{Calibration and control of a redundant robotic workcell for milling tasks} detalla el procedimiento para la sintonización de un manipulador serial ${KUKA}^{TM}$, en donde propone un método para la calibración de este dispositivo en el sitio, usando sensores láser de desplazamiento y con una restricción de plano de no contacto. Estos procedimientos son sencillos de implementar y los recomienda para la mayoría de los robots industriales por su rapidez en el sitio.
+
+En breve de los robots seriales, son mecanismos con una cadena cinemática abierta, la cuál le otorga un amplio espacio de trabajo, múltiples posturas para un misma posición y sencillez en el control, pero del mismo modo, produce baja estabilidad y rigidez en el sistema.
+
+\subsubsection{Robot Herramienta Paralelo}
+La creciente demanda de productos con mejores especificaciones ha llevado a la industria de la fabricación a incrementar los requerimientos y el rendimiento de los robots industriales, exigiendo mayores niveles de precisión operacional, capacidad de trabajo, confiabilidad y ciclo de vida. Una tendencia para la satisfacción de estas demandas radica en la implementación de manipuladores paralelos, los cuales poseen un potencial de trabajo alto, resaltando características como su alta rigidez, alta precisión y alta capacidad de carga \citep{zhang2009parallel}, además de ciertas ventajas como forma isotrópica, espacio libre de singularidades, rendimiento kinostatico uniforme y reconfigurabilidad \citep{lin2015design,ur2009kinematic,ZENG2014648}; por esto han sido implementado en la rehabilitación de brazo, mover y poner, maquinado de precisión o simulador de braquiterapia \citep{briot2009pantopteron,cardou2010dimensional,hoppner2015two,martini2015static}.
+
+Por esto en la literatura se estudia a los mecanismos paralelos desde el análisis de una configuración \citep{sarabandi2018reconfigurable}, análisis cinemático \citep{gallardo2014application}, análisis dinámico \citep{xu2017dynamic}, el diseño \citep{li2018design}, Optimización \citep{kelaiaia2012multiobjective} y el control \citep{cazalilla2016hybrid}.
+
+En el análisis de configuración, está el caso de \cite{sarabandi2018reconfigurable}, quien en su artículo \enquote{A Reconfigurable Asymmetric 3-UPU Parallel Robot} analiza la arquitectura UPU, \textit{Universal - Prismática - Universal}, por la posibilidad que tiene un mecanismo de tres brazos con esta arquitectura de presentar un movimiento puramente traslacional o puramente rotacional según su modo de ensamble. Esta configuración fue previamente estudiada por \cite{di1998translational}, quien determinó cuales son las condiciones que deben cumplir las universales, más específicamente el par de revolutas que la conforman, para producir movimientos de traslación; por otro lado, \cite{karouia2000three} estudio las condiciones constructivas que permiten un movimiento completamente rotacional en la plataforma. Sin embargo, el mecanismo presenta una sensibilidad a errores y zonas de su espacio de trabajo donde tiene un movimiento mixto,   traslación – rotación, y es por esto que los autores introducen una configuración asimétrica que permita prevenir estos inconvenientes de la arquitectura.
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=0.9\linewidth]{Cap2_DisenoEspecificaciones/Figura/Sarabandi2018-01.pdf}
+        \caption{Mecanismo Traslacional}
+        \label{fig:Sarabandi2018-01}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=0.8\linewidth]{Cap2_DisenoEspecificaciones/Figura/Sarabandi2018-02.pdf}
+        \caption{Mecanismo Rotacional}
+        \label{fig:Sarabandi2018-02}
+    \end{subfigure}
+    \caption{Arquitectura propuesta por \cite{sarabandi2018reconfigurable}}
+    \label{fig:Sarabandi2018}
+\end{figure}
+
+En el análisis cinemático, \cite{gallardo2014application} en su trabajo \enquote{An application of screw theory to the kinematic analysis of a Delta-type robot} detalla los pasos de un análisis cinemático para un mecanismo tipo delta, ver Figura \ref{fig:Gallardo2014}, explicando el método por \citep{pierrot1990delta} para resolver el problema de cinemática inversa de este; para después realizar el análisis de velocidades aplicando teoría de tornillo, un recurso matemático que hace uso de las coordenadas de Plücker para simbolizar el estado de movimiento de cada revoluta además de la forma de Klein de la algebra de Lie para calcular las velocidades; por último, el análisis de aceleración aplica la misma teoría; los resultados son verificados con un software de simulación llamado ADAMS.
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Cap2_DisenoEspecificaciones/Figura/Gallardo2014.pdf}
+    \caption{Robot delta simulado en ADAMS}{Fuente: \citep{gallardo2014application}}
+    \label{fig:Gallardo2014}
+\end{figure}
+
+En el análisis dinámico, \cite{xu2017dynamic} explica, en \enquote{Dynamic analysis of a linear Delta robot in hybrid polishing machine based on the principle of virtual work}, un método llamado trabajo virtual para resolver el análisis dinámico de un robot delta lineal, ver Figura \ref{fig:Xu2017}; dicho método apunta a resolver las fuerzas motrices de las juntas prismáticas, teniendo en cuenta las fuerzas y momentos inerciales de cada cuerpo móvil alrededor del punto de pivote. Por otro lado, esta metodología recibe su nombre debido a que se supone un desplazamiento virtual, interrelacionando los desplazamientos de cada cuerpo con las entradas a través de matrices jacobianas, con esto se calcula los trabajos realizados por todas las fuerzas externas del mecanismo, y por último, se determinan las fuerzas de los actuadores.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.4\textwidth]{Cap2_DisenoEspecificaciones/Figura/Xu2017.pdf}
+    \caption{Modelo 3D del robot paralelo}{Fuente: \citep{xu2017dynamic}}
+    \label{fig:Xu2017}
+\end{figure}
+
+En el diseño, \cite{li2018design} trabaja el diseño de un robot paralelo con configuración 3-CPS, esto lo hace en el artículo \enquote{The design of a 3-CPS parallel robot for maximum dexterity}. En la primera etapa del diseño se selecciona la arquitectura con la que se va a trabajar, especificando sus ventajas y desventajas, para su caso escogieron los SDelta, ver Figura \ref{fig:Li2018}, debido a que son robots paralelos con 6 grados de libertad, esto implementando 3 brazos, de ahí que eviten interferencia entre los brazos, así como baja carga inercial. Además todos sus motores están ubicados en la base. Luego de esto, el procedimiento de diseño continúa con los análisis cinemáticos y cinéticos, determinando la cinemática inversa o la directa, un análisis de singularidades y por último, un análisis de fuerzas. Esto es hecho para mirar el comportamiento del mecanismo ante una medidas determinadas. El diseño prosigue con una optimización dimensional, la cual se hace es llevada a cabo midiendo un índice de desempeño. Este índice o conjunto de índice son escogidos en función de los requerimientos de la aplicación.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Cap2_DisenoEspecificaciones/Figura/Li2018.pdf}
+    \caption{Arquitectura SDelta}{Fuente: \citep{li2018design}}
+    \label{fig:Li2018}
+\end{figure}
+
+En la Optimización, \cite{kelaiaia2012multiobjective} en su trabajo \enquote{Multiobjective optimization of a linear Delta parallel robot} muestra como la síntesis dimensional es vital para el buen diseño de un robot paralelo. Propone una metodología para este problema, ver Figura \ref{fig:Kelaiaia2012}, el cual es expresado en términos de una optimización multiobjetivos teniendo en cuenta varios criterios de rendimiento. Dichos criterios de evaluación miden el rendimiento del espacio de trabajo, la rigidez, así como el comportamiento cinemático y dinámico. Para llevar a cabo la optimización utilizan un algoritmo genético SPEA-II, configurado con 200 miembros de la población, 200 generaciones, 90\% de probabilidad de cruzamiento y probabilidad de mutación del 10\%.
+
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Cap2_DisenoEspecificaciones/Figura/Kelaiaia2012.pdf}
+    \caption{Metodología propuesta}{Fuente: \citep{kelaiaia2012multiobjective}}
+    \label{fig:Kelaiaia2012}
+\end{figure}
+
+En breve, los robots paralelos presentan una serie de ventajas cinemáticas y dinámicas, comparados con las otras dos tecnologías. Para aprovechar estas ventajas en la etapa de diseño, se deben analizar desde la arquitectura, pasando por cada uno de los análisis cinemáticos y cinéticos, así como otros necesarios para los criterios de la aplicación, hasta la parte de la síntesis dimensional del mecanismo.
+
+\input{Cap2_DisenoEspecificaciones/Tablas/ResumenEstadodelArte.tex}
+
+%%%%%   Estado de la Técnica    %%%%%
+\subsection{Estado de la Técnica}
+
+En la industria actual existe una amplia oferta de equipos para llevar a cabo procesos de fabricación de piezas de alta calidad como el maquinado. En cuanto al proceso de fresado existen 3 tipos de soluciones comerciales actuales muy competitivas en el mercado.
+
+\input{Cap2_DisenoEspecificaciones/Tablas/EmpresasMaquinasParalelas.tex}
+En los últimos años han surgido diversas iniciativas investigativas y propuestas sobre la aplicación de robots con arquitecturas paralelas como solución a ciertas limitaciones de las máquinas herramientas seriales. Algunos de estos diseños se han logrado comercializar ofreciendo mejoras en las capacidades dinámicas y rigidez de las máquinas herramientas entrando a la competencia de la industria de la fabricación y a su vez presentando nuevos retos de diseño y control. En la siguiente tabla se presentan algunas de las maquinas herramientas fabricadas hasta la fecha y las aplicaciones que estas han tenido.
+
+~
+
+\input{Cap2_DisenoEspecificaciones/Tablas/Tecnica.tex}
+La tabla anterior realiza una comparativa de algunas especificaciones de fresadoras de 3 ejes abarcando una amplia gama de capacidades, distintos fabricantes y arquitecturas. Como resultado de esta encontramos velocidades lineales promedio de 45m/min para espacios de trabajo de 550x450x370 mm con una compacidad de la máquina de 1.5\%. La tabla es resultado de elaboración propia con adaptaciones de \cite{serje2017parallel}.
+
+
+%\begin{figure}[ht!]
+%    \centering
+%    \includegraphics[width = 0.5\textwidth]{Cap2_DisenoEspecificaciones/Figura/Perfect-Jet_MCV-M8.pdf}
+%    \caption{Máquina Herramienta de Perfect-jet}
+%    \label{fig:Perfect_jet-MCV-M8}
+%\end{figure}
+
+\subsection{Revisión de Patentes}
+En la parte de patentes sobre máquinas herramientas se ha encontrado distintas tecnologías aplicadas como los son manipuladores paralelos, robots serial y cartesianos, además de mecanismos híbridos entre seriales y paralelos. Estas patentes son mostradas a continuación en detalle, y al final serán resumida en la tabla \ref{table:PatentRevision}.
+
+\textbf{CN109676587A} - \textit{A kind of four-degree-of-freedom high speed parallel robot} \citep{patent:CN109676587A}: La patente proporciona un robot paralelo de alta velocidad de cuatro grados de liberta. Este este compuesto por una base, una plataforma de movimiento, efector final, cuatro cadenas de ramificación. La plataforma de movimiento está compuesta por una plataforma superior, una inferior un acople giratorio y un mecanismo amplificador de ángulo. este mecanismo amplificador de ángulo está dispuesto entre la plataforma inferior y la superior. Se utilizan juntas esféricas y giratorias.
+
+\textbf{AU2007297702B2} - \textit{Systems, devices, and methods for surgery on a hollow anatomically suspended organ.} \citep{patent:AU2007297702B2}: La patente expone un dispositivo (Robot) para el uso de operaciones microquirurgicas (ocular), El dispositivo posee un robot híbrido esclavo que tiene al menos dos brazos robóticos (cada brazo robótico tiene un robot en serie conectado a un robot paralelo) y un maestro tele-robótico que tiene al menos dos esclavos maestros controlados por el usuario interfaces ( joysticks). 
+
+\textbf{WO2019091425A1} - \textit{Few-joint over-constrained five-freedom-degree hybrid connection robot} \citep{patent:WO2019091425A1}: La patente aporta un robot con una conexión hibrida de pocas articulaciones con cinco grados de libertad, ver Figura \ref{fig:WO2019091425A1}. Este está compuesto por: una plataforma fija (11), marcos verticales de tipo erecto (10), un marco de rotación de par de rotación simple (8), doble marco de rotación de par de rotación (6), una plataforma móvil (3), una plataforma de trabajo (1), tres cadenas de ramificación (4,5, 9) de una misma estructura y un cabezal de ajuste de postura de dos grados de libertad (2).
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width = 0.5\textwidth]{Cap2_DisenoEspecificaciones/Figura/WO2019091425A1.pdf}
+    \caption{Robot de 5-GDL conexión hibrida}{Fuente:\citep{patent:WO2019091425A1}}
+    \label{fig:WO2019091425A1}
+\end{figure}
+
+\textbf{CN109091233A} - \textit{Puncturing operation robot based on series and parallel structure} \citep{patent:CN109091233A}: Esta patente pertenece al campo técnica de los dispositivos médicos, es un robot para cirugía de punción basado en una estructura en serie-paralela. La máquina está compuesta de una base, un mecanismo de ajuste y postura y un mecanismo de inserción de aguja. Las acciones del robot de cirugía de punción del control atreves de los cinco grados de libertad de la estructura serie- paralela.
+
+\textbf{ES2433664T3} - \textit{Dispositivo guiador dirigible} \citep{patent:ES2433664T3}: Esta patente presenta una sonda robótica articulada, con 2 mecanismo que pueden operar coordinados o según la configuración que se necesite, flácido o rígido.
+
+\textbf{US5715729A} - \textit{Machine tool having parallel structure} \citep{patent:US5715729A}: Trata del diseño de un robot paralelo con seis grados de libertad, Figura \ref{fig:US5715729A}, con 6 brazos y 6 motores, una placa base fija y una sección móvil, destinado a trabajar materiales duros y a un enfoque industrial.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width = 0.5\textwidth ]{Cap2_DisenoEspecificaciones/Figura/US5715729A.pdf}
+    \caption{Estructura para máquina paralela}{Fuente:\citep{patent:US5715729A}}
+    \label{fig:US5715729A}
+\end{figure}
+
+\textbf{ES2392059B2} - \textit{Robot de estructura cinemática híbrida para el guiado de la inserción de agujas, catéteres y elementos quirúrgicos para procedimientos de cirugía mínimamente invasiva.} \citep{patent:ES2392059B2}: 
+
+\textbf{CN109348795A} - \textit{A kind of replanting system and its implementation based on parallel robot} \citep{patent:CN109348795A}: La invención describe con un sistema de transporte basado en un robot paralelo y un método de implementación del sistema. EL sistema está compuesto por Una estructura de marco, robot paralelo y un dispositivo de transporte.
+
+\textbf{US 8,776,632 B2} - \textit{Actuación de baja carrera para un robot en serie.} \: 
+
+
+%\textbf{CN201579788U} - \textit{Opened field type six-freedom-degree serial-parallel processing robot}: La patente es de un robot serie-paralelo de seis grados de libertad (campo abierto) que cuenta con sensores de fuerza, cámara de visión que envían información a un controlador que calcula donde está el husillo y la fuerza para moverlo.
+~
+\input{Cap2_DisenoEspecificaciones/Tablas/Patentes.tex}
+%\newpage
+%%%%%   Definición de Especificaciones    %%%%%
+\section{Definición de Especificaciones}
+\subsection{Despliegue de Función de Calidad (QFD)}
+
+La matriz QFD es una parte fundamental del proceso de diseño que facilita la generación de especificaciones de el producto o maquina a fabricar, permite hacer una comparación entre las caracteristicas que intervienen en este teniendo en consideracion los requerimientos del cliente y de diseño. La matriz QFD presenta de manera resuminda y confronta las caracteristicas requeridas, los pros y contras, de manera que se traduzcan tales requerimientos en variables de ingenieria (medibles) y de este modo facilitar la toma de desciciones y la propuesta de alternativas.
+
+\begin{landscape}
+\begin{figure}[hb!]
+    \centering
+    \includegraphics[scale=0.9]{Cap2_DisenoEspecificaciones/Figura/QFD.pdf}
+    \caption{QFD}
+    \label{fig:QFD}
+\end{figure}
+\end{landscape}
+
+\subsection{Listado de referencia de especificaciones}
+
+La lista de referencia es una estrategia de diseño que busca desarrollar una lista de especificaciones iniciales suficientes, las cuales se construyen a partir de los estudios del estado del arte, estado de la tecnica y analisis del QFD donde se intenten abordar todos los aspectos y elementos del diseño y apuntar a la obtencion de especificaciones completas. 
+\input{Cap2_DisenoEspecificaciones/Tablas/LR.tex}
+~
+La tabla mostrada es el modelo de lista de referencia del método MEPEIS y se utilizó para la construcción del listado de referencia propio.
+\input{Cap2_DisenoEspecificaciones/Tablas/Especificaciones.tex}
+
+\section{Normas}
+\input{Cap2_DisenoEspecificaciones/Tablas/Normas.tex}

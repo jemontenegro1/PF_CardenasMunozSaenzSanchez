@@ -1,0 +1,75 @@
+%% Definir tipo de documento
+\documentclass[12pt]{report}
+%% tamaño de hoja
+\usepackage[letterpaper, margin = 1in]{geometry}
+%\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+%% Añadir varias imagenes en una sola
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+%% Poder citar en APA
+\usepackage{natbib}
+\bibliographystyle{apalikees}
+%% Hipervinculos para las citas y secciones
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=black,
+    urlcolor=black
+}
+%% Sub ecuaciones
+\usepackage{amsmath}
+%% Para la creación de Tablas
+\usepackage[normalem]{ulem}
+\useunder{\uline}{\ul}{}
+\usepackage{longtable}
+\usepackage{lipsum}
+\captionsetup[table]{name=Tabla}
+\usepackage{xcolor,colortbl}
+\usepackage{enumitem}
+%% Caracteres chinos
+\usepackage[UTF8]{ctex}
+%% Citas directas
+\usepackage{csquotes}
+%% Hoja Horizontal
+\usepackage{lscape}
+%% Documento
+\begin{document}
+    %%%%%   Hoja de Titulo    %%%%%
+    \input{Cap0_Titulo/Titulo.tex}
+    \newpage
+    
+    %%%%%   Contenido    %%%%%
+    \renewcommand{\contentsname}{Contenido}
+    \tableofcontents
+    \newpage
+    
+    %%%%%   Lista de Tablas    %%%%%
+    \renewcommand{\listtablename}{Lista de Tablas}
+    \addcontentsline{toc}{chapter}{\numberline{}Lista de Tablas}
+    \listoftables
+    \newpage
+    
+    %%%%%   Lista de Figuras    %%%%%
+    \renewcommand{\listfigurename}{Lista de Figuras}
+    \addcontentsline{toc}{chapter}{\numberline{}Lista de Figuras}
+    \listoffigures
+    
+    %%%%%   Capitulo 1 : Formulacion del Proyecto    %%%%%
+    \input{Cap1_FormulaciondelProyecto/FormulaciondelProyecto}
+    
+    %%%%%   Capitulo 2 : Diseño de Especificaciones    %%%%%
+    \input{Cap2_DisenoEspecificaciones/DisenodeEspecificaciones.tex}
+    
+    \setcounter{chapter}{0}
+    \renewcommand{\thechapter}{\Alph{chapter}}
+    %%%%%   Capitulo X : Anexos    %%%%%
+    \input{CapX_Anexos/Anexos.tex}
+    
+    %%%%%   Capitulo X : Bibliografia    %%%%%
+    \addcontentsline{toc}{chapter}{\numberline{}Bibliografia} 
+    \bibliography{Bibliografia}
+\end{document}
