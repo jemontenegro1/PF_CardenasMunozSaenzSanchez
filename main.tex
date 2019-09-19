@@ -11,6 +11,7 @@
 \usepackage{float}
 %% Poder citar en APA
 \usepackage{natbib}
+%\usepackage[numbers]{natbib}
 \bibliographystyle{apalikees}
 %% Hipervinculos para las citas y secciones
 \usepackage{hyperref}
@@ -30,12 +31,16 @@
 \captionsetup[table]{name=Tabla}
 \usepackage{xcolor,colortbl}
 \usepackage{enumitem}
+\usepackage{multicol,multirow}
 %% Caracteres chinos
 \usepackage[UTF8]{ctex}
 %% Citas directas
 \usepackage{csquotes}
 %% Hoja Horizontal
 \usepackage{lscape}
+%% Evitar los saltos o gaps en las listas
+\newcommand\nosep{\vspace{-1ex}\setlength\itemsep{-0.75ex}}
+
 %% Documento
 \begin{document}
     %%%%%   Hoja de Titulo    %%%%%
@@ -64,12 +69,15 @@
     %%%%%   Capitulo 2 : Diseño de Especificaciones    %%%%%
     \input{Cap2_DisenoEspecificaciones/DisenodeEspecificaciones.tex}
     
-    \setcounter{chapter}{0}
-    \renewcommand{\thechapter}{\Alph{chapter}}
-    %%%%%   Capitulo X : Anexos    %%%%%
-    \input{CapX_Anexos/Anexos.tex}
+    %%%%%   Capitulo 3 : Diseño Conceptual    %%%%%
+    \input{Cap3_DisenoConceptual/DisenoConceptual.tex}
     
     %%%%%   Capitulo X : Bibliografia    %%%%%
     \addcontentsline{toc}{chapter}{\numberline{}Bibliografia} 
     \bibliography{Bibliografia}
+    
+    \setcounter{chapter}{0}
+    \renewcommand{\thechapter}{\Alph{chapter}}
+    %%%%%   Capitulo X : Anexos    %%%%%
+    \input{CapX_Anexos/Anexos.tex}
 \end{document}
