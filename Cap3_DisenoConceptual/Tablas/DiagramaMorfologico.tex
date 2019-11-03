@@ -1,20 +1,28 @@
-\begin{longtable}{| >{\columncolor[gray]{0.85}} c | >{\columncolor[gray]{0.85}} p{0.2\textwidth} | p{0.2\textwidth}   p{0.2\textwidth}   p{0.2\textwidth} |}
+\small
+\begin{longtable}{| >{\columncolor[gray]{0.85}} c | >{\columncolor[gray]{0.85}} c | >{\columncolor[gray]{0.85}} p{0.2\textwidth} | p{0.15\textwidth}   p{0.15\textwidth}   p{0.15\textwidth} |}
+
 \hline \rowcolor[gray]{0.85}
- N & Subfunción                               & Concepto de solución 1      & Concepto de solución 2   & Concepto de solución 3 \\ \hline \endhead
- 1 & Tipo de alimentación de energía          & Batería                     & Corriente alterna        & Alimentación trifásica \\ \hline
- 2 & Transmitir energía hacia los componentes & Conexiones eléctrica        & Transformador eléctrico  & Transductor \\ \hline
- 3 & Sistema de control                       & Computarizado               & Manual                   & Semiautomático\\ \hline
- 4 & Software                                 & Arduino                     & Python                   & LabVIEW\\ \hline
- 5 & Actuadores                               & Motor paso a paso           & Motores síncronos	       & \\ \hline
- 6 & Sistema de guiado                        & Rieles                      & Ejes                     & Cable\\ \hline
- 7 & Montaje de herramienta de corte          & Acople magnético            & Acople tipo mordaza      &\\  \hline
- 8 & Sistema de refrigeración                 & Refrigeración por aire      & Refrigeración por liquido & Refrigeración Mixto\\ \hline
- 9 & Sujeción de materia prima                & Mordazas mecánicas          & Mordazas neumáticas       & Mordazas hidráulicas \\ \hline
-10 & Sistema de transmisión de movimiento     & Tornillo de potencia        & Cilindro-pistón           & Transmisión por correa\\ \hline
-11 & Confirmar finalización de operación      & Indicador led               & Indicador digital         & Indicador sonoro \\ \hline
-12 & Sistema de limpieza                      & Aire comprimido             & Agua a presión            & Barrido manual\\ \hline
-13 & Sistema de parada de emergencia          & Sistema mecánico bloqueante & Sistema corta corriente   & \\ \hline
-14 & Cinemática                               & Convencional                & Paralela (Try-Piramid)    & Paralela (UPU)\\ \hline
+ Función & N & Subfunción                               & Concepto de solución 1      & Concepto de solución 2   & Concepto de solución 3 \\ \hline \endhead
+ & 1 & Tipo de alimentación de energía          & Electrica                     & Hidraulica & Neumatica \\ \cline{2-6}
+ & 2 & Transmitir energía hacia los componentes & Conexiones eléctrica        & Tuberia hidraulica  & Tuberia Neumatica \\ \cline{2-6}
+ & 3 & Sistema de control                       & Computarizado               & Manual                   & Semiautomático\\ \cline{2-6}
+\multirow{-4}{*}{ Iniciar Sistema}& 4 & Software                                 & Arduino                     & Python                   & LabVIEW\\ \hline
+ 
+ &  5 & Montaje de herramienta de corte          & Acople magnético            & Acople tipo mordaza      &\\  \cline{2-6}
+ &  6 & Sujeción de materia prima                & Mordazas mecánicas          & Mordazas hidráulicas       & Mordazas neumáticas  \\ \cline{2-6}
+\multirow{-3}{*}{Preparar Montajes} &  7 & Sistema de refrigeración                 & Refrigeración por aire      & Refrigeración por liquido & Refrigeración Mixto\\ \cline{1-6}
+ &  8 & Cinemática                               & Convencional                & Paralela (Try-Piramid)    & Paralela (UPU)\\ \cline{2-6}
+
+ & 9 & Actuadores                               & Motor paso a paso           & Motores síncronos	       & \\ \cline{2-6}
+ & 10 & Sistema de guiado                        & Rieles                      & Ejes                     & Cable\\ \cline{2-6}
+
+ 
+ & 11 & Sistema de transmisión de movimiento     & Tornillo de potencia        & Cilindro-pistón           & Transmisión por correa\\ \cline{2-6}
+ \multirow{-4}{*}{ Mecanizar} & 12 & Sistema de parada de emergencia          & Sistema mecánico bloqueante & Sistema corta corriente   & \\ \hline
+
+ & 13 & Sistema de limpieza                      & Aire comprimido             & Agua a presión            & Barrido manual\\ \cline{2-6}
+  \multirow{-2}{*}{ Finalizar operación} & 14 & Confirmar finalización de operación      & Indicador led               & Indicador digital         & Indicador sonoro \\ \hline
+
 \caption{Diagrama Morfológico}
 \label{table:DiagramaMorfologico}
 \end{longtable}

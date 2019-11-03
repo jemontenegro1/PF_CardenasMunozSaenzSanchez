@@ -5,11 +5,12 @@
 \section{Metodología del Diseño Conceptual}
 En el apartado del diseño de la solución esta presenta la fase conceptual, en donde el diseño está más enfocado en la generación y selección de conceptos de solución. Esta fase se caracteriza por tener presentar diferentes metodologías o maneras de generar alternativas, así como de evaluar estas. Algunos ejemplos de estas metodologías de generación de alternativas están presentes en el libro de \cite{dieter2012engineering}, donde explica métodos creativos como la lluvia de ideas, la sinéctica y el diseño biomimetico, así como métodos sistemáticos como la descomposición y síntesis funcional, el análisis morfológico y la teoría de la resolución inventiva de problemas (conocida como TRIZ por sus siglas en ruso). Por otro lado, en las metodologías de evaluación, \cite{dieter2012engineering} muestra los métodos sistemáticos de evaluación por medio de matrices de decisión, determinado por criterios ponderados, y en los cuales se destaca la Asignación Directa, el Árbol de Objetivos y el Proceso Analítico de Jerarquía (AHP por sus siglas en ingles).
 
-En el marco de este proyecto se hará de la metodología sistema tanto para la generación como la evaluación de alternativas de diseño. En el parte de la generación se hará uso de la descomposición y síntesis funcional, así como del análisis morfológico; mientras que en la evaluación se hará uso del método de Asignación Directa y el AHP. Estos serán dispuestos de la siguiente manera:
+Para este proyecto se hará de la metodología sistemática tanto para la generación como la evaluación de alternativas de diseño. En el parte de la generación se hará uso de la descomposición y síntesis funcional, así como del análisis morfológico; mientras que en la evaluación se hará uso del método AHP. Estos serán dispuestos de la siguiente manera:
 
 \begin{enumerate} \nosep
     \item Descomposición y Síntesis Funcional.
-    \item Selección de tecnología de maquina herramientas a través del método de Asignación Directa.
+    \item Definición y ponderación de criterios de selección
+    \item Selección de tecnología de maquina herramientas
     \item Análisis morfológico.
     \item Generación de Alternativas.
     \item Proceso Analítico de Jerarquía  (AHP).
@@ -61,7 +62,7 @@ Los diagramas obtenidos para este proyecto se pueden observar en las figuras \re
 
 \begin{figure}[htb!]
     \centering
-    \includegraphics[width = 0.5 \textwidth]{Cap3_DisenoConceptual/Figura/CajaNegra.pdf}
+    \includegraphics[width =  \textwidth]{Cap3_DisenoConceptual/Figura/CajaNegra.pdf}
     \caption{Caja Negra de la Máquina Herramienta}{Fuente: Elaboración Propia}
     \label{fig:CajaNegra}
 \end{figure}
@@ -73,16 +74,161 @@ Los diagramas obtenidos para este proyecto se pueden observar en las figuras \re
     \label{fig:CajaTransparente}
 \end{figure}
 
+\newpage
+
+%%%%%   Definición y ponderación de criterios de selección    %%%%%
+\section{Definición y ponderación de criterios de selección}
+Las alternativas de diseño de conceptuales que se sean planteadas deben satisfacer unos criterios para ser seleccionada como mejor alternativa. Estos criterios, aparte de las especificaciones de diseño, son indicadores del nivel de rendimiento de la solución, de ahí que se implemente un método sistemático cuantitativo para la evaluación de las alternativas. Para este proyecto se harán uso de nueve criterios que diseño, que compren factores económicos, rendimiento mecánico, diseño amigable con el medio ambiente y seguridad.
+
+\subsection{Descripción detallada de las criterios de selección}
+\textbf{Costo de Adquisición}: Es altamente deseable un bajo costo de adquisición para la maquina puesto que el mercado objetivo son las Pymes y la solución brindada debe estar asequible.
+
+\textbf{Costo de Mantenimiento}: Se requiere que sea mínimo para reducir costos operativos y de producción, se relaciona con el número de piezas, modularidad y estandarización de las piezas de la máquina.
+
+\textbf{Costo operativo/ Operación Ecológica}: Se requiere que sean bajos ya que te permite estimar la minimización de los costos del producto final.
+
+\textbf{Precisión/Rigidez}: Se requiere una alta precisión y rigidez en la maquina herramienta debido a que se producirán piezas con bajas tolerancias y de alta calidad que logren ser competitivas en un mercado internacional.
+
+\textbf{Seguridad}: Es altamente deseado, ya que permite que durante el proceso de producción tanto la pieza como el operador sufra una pérdida significativa.
+
+\textbf{Compacidad}: Se desea una relación de compacidad alta donde la maquina pueda optimizar el espacio disponible en campo y conservar un espacio de trabajo para poder trabajar con piezas de mayor tamaño.
+
+\textbf{Re configurabilidad}: El modularidad hace referencia a la posibilidad de hacer módulos (sistemas interconectables e intercambiables) de manera tal que facilite la posibilidad de hacer modificaciones de módulos en particular, ya sea para mejora de un módulo o para cambiar la función de este.
+
+\textbf{Control}: Es altamente deseado, este disminuye el tiempo operativo, aumenta la precisión, minimiza las vibraciones, y aumenta la capacidad de operación hace referencia al control tanto de la máquina operativa como control en los factores externos.
+
+\textbf{Capacidad de Carga}: Es altamente deseada para aumentar la productividad, poder maquinar materiales más resistentes, manejar mayores velocidades de maquinado y mayor durabilidad de los componentes de la máquina.
+
+\subsection{Matriz de comparación de los criterios de selección}
+\begin{landscape}
+    \input{Cap3_DisenoConceptual/Tablas/pairMatrix.tex}
+\end{landscape}
+
 %%%%%   Selección de la tecnología de Máquina Herramienta    %%%%%
 \section{Selección de la tecnología de Robot Herramienta}
-Para la selección de tecnología  
+\ref{section:DefiniciondeEspeficaciones}
+A partir de lo encontrado en la definición de especificaciones (ver Capitulo \ref{section:DefiniciondeEspeficaciones}), fueron encontradas 3 tecnologías de mecanismos empleados como máquinas herramientas, estos son las máquinas convencionales (con sistema cartesiano), robots seriales (con lazo abierto) y manipuladores paralelos (lazo cerrado). Cada uno con sus ventajas y desventajas, por lo que para una buena generación de alternativas se comparó el rendimiento de estas tecnologías según los criterios de selección y determinar cuál es la mejor tecnología para esta aplicación. Se empleó un método de asignación directa para la evaluación, y las ponderaciones se basan de lo visto en la literatura. A parte de esto, se realiza un análisis de robustez de la solución, donde se concluye que las opciones convencionales y paralelas son las mejores para este proyecto.
 
 \input{Cap3_DisenoConceptual/Tablas/SeleccionTecnologia.tex}
 
 \section{Análisis morfológico}
 
+Con el objetivo de conformar diversas alternativas, se decidió realizar un análisis morfológico el cual permitiera identificar posibles soluciones que cumpliesen las subfunciones planteadas anteriormente en el despliegue de funciones. En este análisis se evaluaron 3 posibles soluciones para cada subfunción y se plasmo el conjunto en una tabla.
 \input{Cap3_DisenoConceptual/Tablas/DiagramaMorfologico.tex}
 
+\newpage
 \section{Generación de Alternativas}
 
+\subsection{Alternativa 1: Máquina Herramienta Convencional}
+
+\subsubsection{Resumen de la alternativa} La principal característica que presenta la alternativa 1 es la estructura tipo cartesiana que brinda 3 grados de libertad conforme a los ejes cartesianos. En este caso, el mecanismo de la maquina es movido por 3 motores paso a paso ubicados en cada eje, los cuales mueven un carro mediante un tornillo de potencia. El movimiento de cada carro es guiado por un sistema de rieles ubicados de forma tal que permitan alcanzar el espacio de trabajo deseado. El mecanismo consta de un motor ubicado en el eje z (Vertical) que es el encargado de mover la herramienta de corte.
+En el carro correspondiente al eje Y, se dispone un sistema de guiado en el cual se montan unas mordazas mecánicas las cuales son las encargadas de sujetar el material a mecanizar.
+Por otra parte, el proceso de mecanizado será llevado a cabo por un proceso de control numérico computarizado, específicamente con el interfaz de Python.
+
+\subsubsection{Descripción}
+Con base al análisis morfológico y la síntesis funcional, se selecciono los conceptos para el funcionamiento de la alterativa 1, generando el siguiente diagrama morfológico de la alternativa. 
+\input{Cap3_DisenoConceptual/Tablas/Solución1.tex}
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width =  \textwidth]{Cap3_DisenoConceptual/Figura/Plano_alt_1.pdf}
+    \caption{Plano Explosionado y lista de materiales de la alternativa 1}{Fuente: Elaboración Propia}
+    \label{fig:Plano_alt_1}
+\end{figure}
+
+\subsubsection{Presupuesto}
+Una vez con el concepto de la alternativa establecido, se procedió a realizar un presupuesto, el cuál tenga en cuenta las diferentes fases de vida de la alternativa, es decir desde el diseño hasta la fabricación para la posterior evaluación de viabilidad de la alternativa.
+\input{Cap3_DisenoConceptual/Tablas/Presupuesto1.tex}
+
+
+\subsection{Alternativa 2: Máquina Herramienta Ponchohedron}
+\subsubsection{Resumen de la alternativa} 
+La principal característica que presenta la alternativa 2 es su inspiración en lo encontrado en el trabajo de \cite{ZENG2014648}, en donde se presenta una familia de mecanismos del estilo Try-Pyramid. El robot escogido para la solución consta de una base triangular, en donde los bordes de esta son las prismáticas de las entradas. Los carros están conectados a la plataforma por medio de una paralelogramo formado por dos brazos y juntas universales. Por la plataforma, la cual posee una forma hexagonal que permiten conectar los tres paralelogramos. Esto generando tres grados de libertad lineales, lo que implica utilizar tres entradas, y que para este mecanismo deben ser lineales. Para esto, se utiliza la combinación de motor paso a paso acoplado a un eje roscado.
+La sujeción de la pieza a la máquina se realiza por medio de un sistema neumático que estará soportado en una estructura aparte.
+Por otra parte, el proceso de mecanizado será llevado a cabo por un proceso de control numérico computarizado, específicamente en Arduino.
+
+\subsubsection{Descripción }
+Con base al análisis morfológico y la síntesis funcional, se selecciono los conceptos para el funcionamiento de la alterativa 2, generando el siguiente diagrama morfológico de la alternativa.
+\input{Cap3_DisenoConceptual/Tablas/Solución2.tex}
+
+\begin{figure}[htb!]
+    \centering
+    \includegraphics[width =  \textwidth]{Cap3_DisenoConceptual/Figura/Poncho.pdf}
+    \caption{Plano Explosionado y lista de materiales de la alternativa 2}{Fuente: Elaboración Propia}
+    \label{fig:Plano_alt_2}
+\end{figure}
+
+\newpage
+
+\subsubsection{Presupuesto}
+Una vez con el concepto de la alternativa establecido, se procedió a realizar un presupuesto para la posterior evaluación de viabilidad de la alternativa.
+
+\input{Cap3_DisenoConceptual/Tablas/Presupuesto2.tex}
+
+\subsection{Alternativa 3: Máquina Herramienta RRPRR}
+
+\subsubsection{Resumen de la alternativa}
+La principal característica que presenta la alternativa 2 es su inspiración en lo encontrado en el trabajo de \cite{petko2005mechatronic}, en donde se presenta una familia de mecanismos del estilo RRPRR. El robot escogido para la solución consta de una base triangular, en donde los vértices de esto son los puntos de acople para una revolutas de giro vertical. El eslabón acoplado a esto, posee otra revoluta en su extremo opuesto pero esta gira horizontalmente. Luego de esto, está una prismática, la cual es la entrada de movimiento del sistema. Esto generando tres grados de libertad lineales, lo que implica utilizar tres entradas, y que para este mecanismo deben ser lineales. Para esto, se utiliza la combinación de motor paso a paso acoplado a un eje roscado.
+La sujeción de la pieza a la máquina se realiza por medio de un sistema neumático que estará soportado en una estructura aparte.
+Por otra parte, el proceso de mecanizado será llevado a cabo por un proceso de control numérico computarizado, específicamente en python.
+
+\subsubsection{Descripción }
+\input{Cap3_DisenoConceptual/Tablas/Solución3.tex}
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width =  \textwidth]{Cap3_DisenoConceptual/Figura/Planowilliam.pdf}
+    \caption{Lista de materiales, alternativa 3}{Fuente: Elaboración Propia}
+    \label{fig:Plano_alt_3}
+\end{figure}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =  \textwidth]{Cap3_DisenoConceptual/Figura/PlanoBrazo.pdf}
+    \caption{Lista de materiales Brazo, alternativa 3}{Fuente: Elaboración Propia}
+    \label{fig:Plano_alt_3.2}
+\end{figure}
+
+\newpage
+~
+\newpage
+
+\subsubsection{Presupuesto}
+Una vez con el concepto de la alternativa establecido, se procedió a realizar un presupuesto para la posterior evaluación de viabilidad de la alternativa.
+\input{Cap3_DisenoConceptual/Tablas/Presupuesto3.tex}
+
 \section{Proceso Analítico de Jerarquía  (AHP)}
+%\subsection{Matrices de Comparación por Pares}
+\input{Cap3_DisenoConceptual/Tablas/CostodeAdquisicion.tex}
+\input{Cap3_DisenoConceptual/Tablas/Costodemantenimiento.tex}
+%\newpage
+\input{Cap3_DisenoConceptual/Tablas/Costooperativo.tex}
+\input{Cap3_DisenoConceptual/Tablas/Precisión.tex}
+\input{Cap3_DisenoConceptual/Tablas/Compacidad.tex}
+\input{Cap3_DisenoConceptual/Tablas/MODULARIDAD.tex}
+%\newpage
+\input{Cap3_DisenoConceptual/Tablas/SEGURIDAD.tex}
+\input{Cap3_DisenoConceptual/Tablas/Sistemadecontrol.tex}
+\input{Cap3_DisenoConceptual/Tablas/Capacidaddecarga.tex}
+%\newpage
+
+%\subsection{Matriz de selección de Alternativas}
+\input{Cap3_DisenoConceptual/Tablas/Matrizdedecisión.tex}
+%\newpage
+\begin{landscape}
+    \input{Cap3_DisenoConceptual/Tablas/Sensibilidaddealternativas.tex}
+\end{landscape}
+
+\section{Alternativa Escogida}
+\begin{figure}[hbt!]
+    \centering
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width = \linewidth]{Cap3_DisenoConceptual/Figura/Solucion1.JPG}
+        \caption{Sistema Completo}
+    \end{subfigure}
+    \begin{subfigure}{0.5\textwidth}
+        \includegraphics[width = \linewidth]{Cap3_DisenoConceptual/Figura/Solucion2.JPG}
+        \caption{Brazo Completo}
+    \end{subfigure}
+    \caption{Renderizado de la Alternativa Escogida}
+    \label{fig:RenderSolucion}
+\end{figure}
