@@ -1,0 +1,28 @@
+
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{longtable}{|c|c|c|c|c|c|c|c|}\hline
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{3}{|c|}{\cellcolor[HTML]{EFEFEF}} & \multicolumn{5}{c|}{\cellcolor[HTML]{EFEFEF}Diametro (mm)} \\ \cline{4-8} 
+\rowcolor[HTML]{EFEFEF} 
+\multicolumn{3}{|c|}{\multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}}}                                                                                                                                                                                    & 2   & 4  & 8  & 10& 18\\ \hline
+\rowcolor[HTML]{EFEFEF} 
+\cellcolor[HTML]{EFEFEF}  & \begin{tabular}[c]{@{}c@{}}Velocidad de \\ corte (m / min)\end{tabular}  & \cellcolor[HTML]{EFEFEF}  & \multicolumn{5}{c|}{\cellcolor[HTML]{EFEFEF}Velocidad angular(RPM)} \\ \cline{2-2} \cline{4-8} 
+\rowcolor[HTML]{EFEFEF} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       & 39                                                                                        & \multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}N ° de filos} & 6207         & 3104         & 1552        & 1241        & 690       \\ \cline{2-8} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       &                                                                                           & 2                                                      & 50           & 56           & 84          & 82          & 80        \\ \cline{3-8} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       &                                                                                           & 3                                                      & 75           & 84           & 126         & 123         & 120       \\ \cline{3-8} 
+\multirow{-5}{*}{\cellcolor[HTML]{EFEFEF}\begin{tabular}[c]{@{}c@{}}Acero blando \\ \\ Resistencia a la tracción \\  70 Kg / mm \textasciicircum 2\end{tabular}} & \multirow{-3}{*}{\begin{tabular}[c]{@{}c@{}}Velocidad de \\ avance (mm/min)\end{tabular}} & 4                                                      & 100          & 112          & 168         & 164         & 160       \\ \hline
+\rowcolor[HTML]{EFEFEF} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       & \begin{tabular}[c]{@{}c@{}}Velocidad de \\ corte (m / min)\end{tabular}                   & \cellcolor[HTML]{EFEFEF}                               & \multicolumn{5}{c|}{\cellcolor[HTML]{EFEFEF}Velocidad angular(RPM)} \\ \cline{2-2} \cline{4-8} 
+\rowcolor[HTML]{EFEFEF} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       & 230                                                                                       & \multirow{-2}{*}{\cellcolor[HTML]{EFEFEF}N ° de filos} & 36606        & 18303        & 9152        & 7321        & 4067      \\ \cline{2-8} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       &                                                                                           & 2                                                      & 293          & 329          & 494         & 400         & 230       \\ \cline{3-8} 
+\cellcolor[HTML]{EFEFEF}                                                                                                                                       &                                                                                           & 3                                                      & 440          & 494          & 741         & 600         & 345       \\ \cline{3-8} 
+\multirow{-5}{*}{\cellcolor[HTML]{EFEFEF}Aluminio}                                                                                                             & \multirow{-3}{*}{\begin{tabular}[c]{@{}c@{}}Velocidad de \\ avance (mm/min)\end{tabular}} & 4                                                      & 586          & 658          & 988         & 800         & 460       \\ \hline
+\caption{Parametros de corte para el Acero blando y aluminio}{Fuente:\citep{catalogue:Blue_Master}}
+\label{table:Parametro_de_corte}
+\end{longtable}

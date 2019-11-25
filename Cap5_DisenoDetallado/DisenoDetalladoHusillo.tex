@@ -1,0 +1,172 @@
+\section{Diseño Detallado del Husillo}
+Para el diseño y selección de los elementos del subsistema motor-husillo se tiene en cuenta la arquitectura paralela de la herramienta, potencia requerida, velocidades y pares necesarios para la operación de fresado. El subsistema del motor-husillo esto compuesto un motor, una caja de trasmisión y un eje flexible.
+
+\subsection{Selección del motor-husillo}
+Para la selección del motor se toma la potencia de corte, velocidad y par que requiere la operación de fresado. La potencia de corte ($P_{c}$) se multiplica por un factor de servicio ($Fs$) y con esta potencia requerida se procede a seleccionar el tipo de motor y posteriormente el motor que se requiere para la operación de fresado.
+
+\begin{equation}
+P_{s}=Fs\times P_{c}=1.1kW\times1.3=1.5 kW
+\end{equation}
+
+Para la selección de tipo de motores se entra la figura \ref{fig:Seleccion_M} donde se concluye que el tipo de motor que ofrece las mejores prestaciones para el fresado es el motor eléctrico. El motor eléctrico posee las siguientes ventajas frente a los motores neumáticos e hidráulico como los es la precisión, silencioso, factibles y fáciles de controlar.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =0.9\textwidth]{Cap5_DisenoDetallado/Figuras/Seleccion_M.PNG}
+    \caption{Rendimiento cualitativo de los motores}{Fuente: Heriberto Maury}
+    \label{fig:Seleccion_M}
+\end{figure}
+
+Después de hacer una búsqueda del motor que cumpla las necesidades de la operación de mecanizado. Se encuentra un Spindle servo motor modelo $MK08-3-9.5-1.5/2.2-4-1500$, Este motor trabaja con 3 fases alternas siendo estos motores asíncronos con excelentes características dinámicas. Según \cite{{catalogue:Shenzhen_Guanhong_Technology}} este motor AC asíncrono es normalmente usado en robot, petróleo, metalurgia, equipos de control automático, etc. Las características de este motor se presentan en la tabla \ref{table:Caracteriticas_motor}.
+
+\input{Cap4_DisenoBasico/Tablas/Caracteristica_motor.tex}
+\newpage
+\subsection{Diseño sistema de transmisión}
+La caja de transmisión la cual se requiere para la operación de la máquina debe ser de relación de transmisión variable, por lo cual debe constar con un selector de engranaje el cual permitirá dar diferentes velocidades de salida con un mismo motor.
+
+Para el diseño de la caja de transmisión se trabajará con engranajes helicoidales, los cuales permiten un trabajo a altas velocidades, proveen una alta relación de contacto y además producen bajos niveles de ruido.
+
+Se diseñarán los engranajes según las recomendaciones de la AGMA, se tomarán como base el número de dientes establecidos en el diseño básico y se iniciara un proceso iterativo el cual permita un diseño sin modos de falla, para iniciar el proceso se establecen los ángulos de hélice y de presión de 20° acorde las recomendaciones de diseño y se evalúan modos de fallas cinemáticos y cinéticos. 
+
+Para el diseño Cinemático se tuvieron en cuenta los siguientes modos de fallas:
+\begin{itemize}\nosep
+    \item  Intermitencia
+    \item Interferencia
+    \item Ruido
+\end{itemize}
+Mientras que el diseño cinético se tuvo en cuenta los siguientes modos de falla:
+\begin{itemize}\nosep
+    \item  Fatiga flexional
+    \item Fatiga superficial
+\end{itemize}
+Para la demostración del diseño se procede a diseñar el engranaje $N° 1$ el cual se encuentra en una relación transmisión de 1, se inicia el proceso de diseño con el diseño cinemático.    
+
+\subsection*{Diseño cinemático}
+\subsubsection*{Intermitencia}
+Para iniciar el análisis se procede a calcular valores geométricos que se necesitaran para la evaluación del engranaje. 
+
+\begin{equation}
+ \phi_{t}=\arctan{\frac{\tan{\phi_{n}}}{\cos{\psi}}}
+\label{Eq:1}    
+\end{equation}
+donde, $ \phi_{t}$  es el ángulo de presión transversal, $\phi_{n}$ es el ángulo de presión normal y el $\psi$ es el Angulo de hélice.
+
+%revisar con jairo
+$\phi_t = 21.1728$, $m=2.5$,    Ancho de caro, $F = 12\times m = 30~mm$, paso normal, $P_n=\pi \times m$, donde m es el modulo.
+%%%%%
+Para la evaluación de intermitencia se calcula un ancho de cara mínimo para el engranaje, este se calcula con la ecuación \ref{Eq:2} de la AGMA Tomada  del \citep{shigley2011shigley}.
+\begin{equation}
+ F_{min}=b_{min}=\frac{1.15 P_{n}}{\tan{\psi}}
+\label{Eq:2}    
+\end{equation}
+$F_{min}= 24.8154~mm$
+Con un ancho de cara mayor a un ancho de cara mínimo, se descarta el modo de falla de intermitencia.
+\subsubsection*{Interferencia}
+La interferencia en los engranajes helicoidales va relacionada con el numero de dientes, un numero de dientes muy pequeño, podría causar un problema de interferencia, por la cual se procede a calcular el número de dientes mínimo  \ref{Eq:3}, para evitar este modo de falla.
+\begin{equation}
+ N_{p,min}=\frac{2K \cos{\psi}(i+\sqrt{i^{2}+(1+2i\sin{\phi_{t}}^{2})}}{(1+2i)\sin{\phi_{t}}^{2}}
+\label{Eq:3}    
+\end{equation}
+Donde k es un factor relacionado con el diente = 1 para dientes completos.
+\\\\
+Np= 8.0225 dientes\\
+
+Finalmente, para el diseño cinemático se evaluo la falla por ruido, este se evaluará estimando la velocidad tangencial en la línea de paso, si esta es inferior a 200m/s se considera que el engranaje no fallara por ruido.
+\begin{equation}
+ v_{t}=w_{p}(\frac{rad}{min})\cdot\frac{2\pi rad}{60 s}\cdot\frac{r_{p}(mm)}{1000mm}:(\frac{m}{s})
+\label{Eq:4}    
+\end{equation}
+Vt=37.88 m/s\\\\
+Para el diseño de los demás engranajes, se procedió de la misma forma que con el engranaje $N° 1$, el resultado de esto se encuentra en la table \ref{table:Diseño_CM}.
+\input{Cap5_DisenoDetallado/Tablas/Diseño_detalle_Engranages.tex}
+\subsection*{Diseño cinético}
+\subsubsection*{Fatiga flexional}
+Para evaluar el modo de falla de fatiga flexional en el engranaje, se debe calcular la fuerza tangencial, esta se calcula teniendo en cuenta la potencia consumida y la velocidad tangencial en la línea de paso del engranaje ecuación .Nota: se escogieron las velocidades de operación mas bajas dado que con estas se obtienen los pares mas altos y por lo tanto las fuerzas más grandes.
+\begin{equation}
+F_{t} = \frac{Potencia}{velocidad}  
+\frac{160W}{6.675 m/s}=23.96 N
+\end{equation}
+%%ERROR EN CITA, CENTRAR RESULTADOS
+Una vez calculada la fuerza tangencial, se procede a calcular el esfuerzo flexionante según la norma AGMA  \ref{Eq:5}, adicionalmente a la fuerza tangencial se agregó un factor de seguridad de 2 para tener en cuenta casos en los cuales existan sobrecargas.
+
+\begin{equation}
+ \sigma_{AGMA}=W_{t}[N]K_{o}K_{v}K_{s}\cdot \frac{1}{F{mm}\cdot m[mm]} \cdot \frac{K_{H}K_{B}}{J} \cdot K_{i}
+\label{Eq:5}    
+\end{equation}
+Donde:\\
+F: Ancho de cara (mm)
+Ki: Es el factor de engranaje intermedio=1.\\
+J: Factor geométrico de forma del diente=0.4.\\
+Ko: Factor de sobrecarga: 1.5.\\
+Kv :Factor dinámico: 1.1.\\
+Ks: Factor de tamaño: 1.5.\\
+KH: Factor de carga: 1.6.\\
+KB: Factor de espesor del aro:1.\\
+Esfuerzo AGMA = 5.5 MPa.\\
+
+Para verificar el diseño se calcula un factor de seguridad tomando como referencia un esfuerzo permisible de flexión, el cual se calcula con la ecuación \ref{Eq:6}
+
+\begin{equation}
+ \sigma_{F,perm}[MPa]=\frac{S_{t}[MPa]}{FS_{F}}  \frac{Y_{n}}{Y_{\theta}Y_{z}} 
+\label{Eq:6}    
+\end{equation}
+Donde 
+St: Esfuerzo de flexión permisible: 170
+YN: Factor de ciclos de esfuerzo para fatiga flexional: 1
+Yz: Factor de confiabilidad: 1.5
+Yθ: Factor de temperatura: 1
+Fs= 20 
+
+Una vez comprobado que no falla por Fatiga flexional, se procede a calcular fatiga superficial.
+\subsubsection*{Fatiga superficial}
+\begin{equation}
+ \sigma_{c}=Z_{e}\cdot \sqrt{\frac{N}{mm^{2}}} \cdot \sqrt{W_{t}[N]K_{o}K_{v}K_{s} \cdot \frac{K_{H}Z_{R}}{d_{p}[mm]F[mm]I}}
+\label{Eq:7}    
+\end{equation}
+Donde: 
+ZE: Coeficiente elástico:191 MPa
+ZR: Factor de condición superficial: 1
+I: Factor geométrico de resistencia superficial:  0.138
+Esfuerzo C =130.78
+Igualmente, que en fatiga flexionaste se busca un factor de seguridad que garantice el diseño, para esto se toma como referencia al esfuerzo permisible ecuación \ref{Eq:8}.
+\begin{equation}
+    \sigma_{c,perm}=S_{c}\cdot \frac{Z_{n}Z_{w}}{Y_{\theta}Y_{z}}
+    \label{Eq:8}
+\end{equation}
+Donde: 
+Sc: esfuerzo superficial permisible: 1100 MPA
+ZW: Factor de relación de dureza: 1
+ZN: Factor de vida de ciclos de esfuerzos: 1
+Esfuerzo c permi= 733.33 MPa
+
+Una vez calculado un valor de referencia se procede a calcular el factor de seguridad con la ecuación \ref{Eq:9}
+
+\begin{equation}
+    Fs_{c}=(\frac{\sigma_{c,perm}}{\sigma_{c}})^{2}
+    \label{Eq:9}
+\end{equation}
+Donde:
+FSc: factor de seguridad AGMA
+FSc=5.6
+
+Este proceso se repitió para cada engranaje, tanto fatiga flexiónate como superficial, el resultado se encuentra en las tablas \ref{table:fatiga_flexionante}, y y z
+
+\input{Cap5_DisenoDetallado/Tablas/Fatiga_flexionante.tex}
+\input{Cap5_DisenoDetallado/Tablas/Fatiga_superficial.tex}
+\input{Cap5_DisenoDetallado/Tablas/Flexionante_2.tex}
+\input{Cap5_DisenoDetallado/Tablas/superficie2.tex}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =0.9\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
+    \caption{Plano del engranaje}{Fuente:Elaboración propia}
+    \label{fig:Planos_engranaje}
+\end{figure}
+
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =0.9\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
+    \caption{Plano del eje}{Fuente:Elaboración propia}
+    \label{fig:Planos_eje}
+\end{figure}

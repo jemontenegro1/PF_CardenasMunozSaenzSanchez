@@ -1,0 +1,34 @@
+%%%%%   Capitulo 4 : Diseño Basico    %%%%%
+\chapter{Diseño Básico}
+
+\section{Metología del Diseño Básico}
+Posterior a la fase de diseño conceptual de la solución, se presenta el diseño básico del mismo, en donde se divide el dispositivo en una serie de subsistemas. Esto con el propósito facilitar el entendimiento de los principios físicos que describen el comportamiento de las diferentes partes del equipo, así como las teorías de diseño empleadas para el dimensionamiento de sus partes. De estas teorías se destacan las de diseño mecánico, las cuales permite el dimensionamiento de un elemento sometido a una condición de esfuerzos, dada una geometría, como son las teorías de fallas para materiales dúctiles (Esfuerzo cortante máximo, Energía de distorsión y Mohr Coulomb dúctil) y para materiales frágiles (Esfuerzo normal máximo, Mohr Coulomb frágil y Mohr modificada) \citep{shigley2011shigley}.
+
+Para este proyecto, la máquina a diseñar se dividió en 6 apartados (también ver Figura \ref{fig:subsystems}):
+
+\begin{itemize} \nosep
+    \item El Husillo, es el sistema de accionamiento de la herramienta de corte.
+    \item El Mecanismo, es el sistema que transmite el movimiento de los actuadores a la herramienta de corte.
+    \item El Accionamiento, es el sistema de actuación que convierten la energía primaria en energía mecánica.
+    \item La Estructura, es el sistema que brinda el soporte y el cual sostiene todos los demás subsistemas.
+    \item El Sistema de Control, es el sistema que manipula el sistema de accionamiento para posicionar la herramienta durante el corte.
+    \item El Sistema de Refrigeración, es el sistema que mantiene la temperatura, tanto de la pieza como la de herramienta, en valores aceptables para el proceso.
+\end{itemize}
+
+El alcance del proyecto llegará hasta el diseño básico de la estructura, dejando para próximos proyectos y/o trabajos el diseño de las demás subsistemas de esta máquina. En las siguientes secciones de este capítulo se desarrollará el diseño de cada apartado.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[height = 0.7\textheight]{Cap4_DisenoBasico/Figura/Subsistemas.pdf}
+    \caption{Subsistemas presentes en la máquina}
+    \label{fig:subsystems}
+\end{figure}
+\newpage
+
+%%%%%   Diseño Basico Husillo    %%%%%
+\input{Cap4_DisenoBasico/DisenoBasicoHusillo.tex}
+\newpage
+
+%%%%%   Diseño Basico Mecanismo    %%%%%
+\input{Cap4_DisenoBasico/DisenoBasicoMecanismo.tex}
+\newpage

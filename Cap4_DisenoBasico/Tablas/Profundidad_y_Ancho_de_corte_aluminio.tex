@@ -1,0 +1,22 @@
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+
+\begin{longtable}{|>{\columncolor[HTML]{EFEFEF}}c |c|c|c|c|c|c|}
+\hline
+\multicolumn{2}{|c|}{\cellcolor[HTML]{EFEFEF}Diametro ($mm$)}                  & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}2} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}4} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}8} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}10} & \multicolumn{1}{l|}{\cellcolor[HTML]{EFEFEF}18} \\ \hline
+\multicolumn{7}{|c|}{\cellcolor[HTML]{EFEFEF}Fresado Lateral}   \\ \hline
+\begin{tabular}[c]{@{}c@{}}Profundidad\\   de corte (mm)\end{tabular} & ap & 2& 4 & 8& 10& 18\\ \hline
+\begin{tabular}[c]{@{}c@{}}Ancho de\\   corte (mm)\end{tabular}       & ep & 0,2& 0,4 & 0,8& 1& 1,8\\ \hline
+\multicolumn{7}{|c|}{\cellcolor[HTML]{EFEFEF}Vaciado} \\ \hline
+\begin{tabular}[c]{@{}c@{}}Profundidad\\   de corte(mm)\end{tabular}  & ap & 0,6 & 1,2 & 2,4 & 3 & 5,4\\ \hline
+\begin{tabular}[c]{@{}c@{}}Ancho de\\   corte(mm)\end{tabular}        & ep & 2 & 4 & 8 & 10 & 18 \\ \hline
+\multicolumn{7}{|c|}{\cellcolor[HTML]{EFEFEF}Basto}\\ \hline
+\begin{tabular}[c]{@{}c@{}}Profundidad\\   de corte(mm)\end{tabular}  & ap & 3& 6& 10 & 10 & 10\\ \hline
+\begin{tabular}[c]{@{}c@{}}Ancho de\\   corte(mm)\end{tabular} & ep & 1  & 2 & 4 & 5 & 9  \\ \hline
+
+\caption{Profundidad y ancho de corte para aluminio}{Fuente:\cite{catalogue:Blue_Master}}
+\label{table:Profundidad_aluminio}
+\end{longtable}
+
+

@@ -1,0 +1,364 @@
+\section{Diseño Básico del Mecanismo}
+Para el diseño básico del mecanismo se trata en dos partes de análisis y dos partes de síntesis o dimensionamiento, esto ocurre porque se trata en dos niveles: el cinemático y el cinético. El primer nivel hace referencia a la parte de movimiento, sin tener en cuenta que lo produce. Por lo que en esta parte se eligen las dimensiones, conocidas como longitudes, que influyen el movimiento. El segundo nivel trata las causas del movimiento, analizando las fuerzas y/o torques necesarios para cumplir las trayectorias definidas.
+
+Para el diseño básico de mecanismo se trabajará primero el nivel cinemático, con su respectivo análisis y dimensionamiento, para luego trabajar el nivel cinético, en donde se determinarán las relaciones para obtener las fuerzas de los actuadores, posterior a eso se plantea un diseño de rigidez que permita manejar los desplazamientos producidos durante la operación. Todo para que por medio de un método de optimización permite dimensionar el mecanismo para que no falle por desplazamiento.
+
+\subsection{Análisis Cinemático}
+
+\subsubsection{Definición de lazos de posición}
+Para el mecanismo propuesto se plantean los lazos cinemáticos del sistema, teniendo como referencia el sistema coordenado en el centro de la base triangular, $O$ (Ver Figura \ref{fig:LazosVectoriales}). Por la simétrica del mecanismo, sus tres brazos presentan lazos vectoriales idénticos, por lo tanto, se puede describir el lazo de manera generalizada para el análisis.
+
+Como se muestra en la Figura \ref{fig:LazosVectorialesArm}, la cadena cinemática presenta 6 puntos importantes. Estos puntos representan la ubicación de cada una de las juntas revolutas del dispositivo ($A$, $B$, $C$ y $D$), la ubicación del origen del sistema de referencia ($O$) y la ubicación de la herramienta de corte ($P$); en donde se interconectan la revoluta final de cada brazo.
+
+Para el caso de  las revolutas $B$ y $D$ poseen su eje de giro normal al vector $\vec{CD}$, lo que producen el ángulo de elevación (en inglés \textit{pitch angle}) del brazo; además su ángulo, $\beta_i$ se mide con respecto al eje X local del eslabón $AB$ (ver Figura \ref{fig:LazosVectorialesABC}). Mientras que las revolutas $A$ y la ubicada en $P$ poseen su eje de giro a lo largo del eje Z, lo que simboliza el ángulo de giro (en inglés \textit{yaw angle}) del brazo; y su ángulo de posición, $\theta_i$, es relativo a la dirección del vector $\vec{OA}$ (ver Figura \ref{fig:LazosVectorialesTheta}). 
+
+Las medidas del mecanismo son simbolizadas de la siguientes manera: la distancia entre los puntos $O$ y $A$ se simboliza con $R_{b}$ y se conoce como radio de la base; para la distancia entre $A$ y $B$ se representa con $L_A$; para el vector $\vec{BC}$ su magnitud se simboliza con $e$; para el vector $\vec{CD}$ la magnitud es $q_i$ y esta es la posición del actuador; por último, $PD$ es representado por $L_D$.
+
+Referente al vector $\vec{OP}$ es representa la posición de la herramienta referente al sistema coordenado utilizando.
+
+\begin{figure}[htb!]
+    \centering
+    \begin{subfigure}{0.6\textwidth}
+        \includegraphics[width=0.9\linewidth]{Cap4_DisenoBasico/Figura/PDFLAZOS1.pdf}
+        \caption{Lazos Vectoriales a lo largo de un brazo}
+        \label{fig:LazosVectorialesArm}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=0.9\linewidth]{Cap4_DisenoBasico/Figura/PDFLAZOS2.pdf}
+        \caption{vista de detalle de los puntos ABC}
+        \label{fig:LazosVectorialesABC}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=0.9\linewidth]{Cap4_DisenoBasico/Figura/PDFLAZOS3.pdf}
+        \caption{Posición angular de $ \theta $}
+        \label{fig:LazosVectorialesTheta}
+    \end{subfigure}
+    \caption{Lazos Vectoriales del mecanismo}
+    \label{fig:LazosVectoriales}
+\end{figure}
+
+La cadena cinemática queda de la forma:
+\begin{equation}
+    \vec{OA} + \vec{AB} + \vec{BC} + \vec{CD} = \vec{OP} + \vec{PD}
+    \label{Eq:cadenacinematica}
+\end{equation}
+
+\subsubsection{Análisis de posiciones}
+Para resolver el problema de posiciones del mecanismo, se hace uso de la ecuación cinemática establecida para un brazo general. Puesto que el efector final, $P$, del mecanismo tiene un movimiento lineal en espacio, su posición se representa con un vector de 3 coordenadas cartesianas cualquiera (ver Ecuación \ref{Eq:P}). Por otro lado,  los eslabones que son conectan por revolutas, se representa por la combinación de matrices de rotación (sección \ref{sec:FundamentosdelaRobotica}). 
+
+\begin{equation}
+    P = \left[\begin{array}{c} P_x \\ P_y \\ P_z \end{array} \right]
+    \label{Eq:P}
+\end{equation}
+
+Con el fin de obtener las expresiones matemáticas generales para las posiciones, las variables de cada brazo manejan un subíndice $i$, el cual indica el brazo correspondiente por eso maneja los valores de $1, ~2, ~y~3$. Además de los parámetros dimensionales explicados en la sección anterior, es necesario la definición de $\alpha_i$, el ángulo que determina la posición de la revoluta $A$.
+
+\begin{equation}
+    \alpha_i = \frac{2\pi}{3}\left( i - 1 \right)
+\end{equation}
+
+Luego de esto, la primera expresión obtenida es la que asocia la posición del efector final, $P$, con el ángulo de giro $\theta_i$ de cada brazo:
+
+\begin{equation}
+    \theta _{i}=\arctan\left(\frac{P_{y}-R_{b}\,\sin\left(\alpha _{i}\right)}{P_{x}-R_{b}\,\cos\left(\alpha _{i}\right)}\right)-\alpha _{i}
+\end{equation}
+
+Ya obtenido el valor de $\theta_i$ es posible determinar $q_i$, sin embargo, para poderlo calcular es necesario determinar $M_i$ (ver ecuación \ref{Eq:M_i}):
+
+\begin{subequations}
+    \begin{eqnarray}
+        q_{i}=\sqrt{M_i-e^2} \\
+        \nonumber \\
+        M_i =  \begin{array}{c}
+            \left( R_b \cos\left(\alpha_i\right) + \left(L_A-L_D\right)\cos\left(\theta_i+\alpha_i\right) - P_x\right)^2 \\
+            + \left( R_b \sin\left(\alpha_i\right) + \left(L_A-L_D\right)\sin\left(\theta_i+\alpha_i\right) - P_y\right)^2 \\
+            + P_z^2 \label{Eq:M_i}
+        \end{array}
+    \end{eqnarray}
+\end{subequations}
+
+La última expresión obtenida es la que determina el valor de $\beta_i$, en donde se necesita de la tercera componente de $P$ y el valor de $q_i$:
+
+\begin{equation}
+    \beta_i = 2 \arctan\left( \frac{e+\sqrt{-{P_{z}}^2+e^2+{q_{i}}^2}}{P_{z}+q_{i}} \right)
+\end{equation}
+
+El desarrollo matematico para la obtención de estas expresiones mostrado en el anexo \ref{Anexo:AnalisisdePosiciones}.
+\newpage
+
+\subsubsection{Análisis de velocidades}
+El análisis de velocidades comienza con la obtención del lazo de velocidades del brazo, para eso se deriva la cadena cinemática (Ecuación \ref{Eq:cadenacinematica}):
+
+\begin{equation}
+    \dot{\vec{AB}} + \dot{\vec{BC}} + \dot{\vec{CD}} = \dot{\vec{OP}} + \dot{\vec{PD}}
+    \label{Eq:cadenavelocidades}
+\end{equation}
+
+Con esta nueva expresión aparecen incógnitas relacionadas con la velocidad de cambio de $\theta, q$ y $\beta$, además el sistema de ecuaciones que se genera es lineal por lo que se puede transformar en ecuaciones matriciales que modelen el comportamiento de la cada variable con respecto a la velocidad del punto $P$ (ver Ecuación \ref{Eq:dP}), y que estén de la siguiente forma:
+
+\begin{equation}
+    X = J_{X} \dot{P}
+    \label{Eq:JacobianExample}
+\end{equation}
+
+\begin{equation}
+    \dot{P} = \left[\begin{array}{c} \dot{P}_x \\ \dot{P}_y \\ \dot{P}_z \end{array} \right]
+    \label{Eq:dP}
+\end{equation}
+
+En donde $ \dot{X} $ simboliza el vector con la incógnita para los 3 brazos, y $J_{X}$ es la matriz jacobiana que relaciona las velocidades del efector con la de las incógnitas, esto manejando la siguiente notación $C_X = \cos{\left( X \right)}$ y $S_X = \sin{\left( X \right)}$.
+
+La primera matriz obtenida $J_{q}$, la cual determina las velocidades de los actuadores ($\dot{q}_{1}, \dot{q}_{2}, \dot{q}_{3}$): 
+
+\begin{equation}
+    J_{q} = \left[ \begin{array}{ccc}
+        -C_{\alpha_1+\theta_1}C_{\beta_1} - \frac{eC_{\alpha_1+\theta_1}S_{\beta_1}}{q_1} & -S_{\alpha_1+\theta_1}C_{\beta_1} - \frac{eS_{\alpha_1+\theta_1}S_{\beta_1}}{q_1} & -S_{\beta_1} + \frac{eC_{\beta_1}}{q_1} \\
+        -C_{\alpha_2+\theta_2}C_{\beta_2} - \frac{eC_{\alpha_2+\theta_2}S_{\beta_1}}{q_2} & -S_{\alpha_2+\theta_2}C_{\beta_2} - \frac{eS_{\alpha_2+\theta_2}S_{\beta_2}}{q_2} & -S_{\beta_2} + \frac{eC_{\beta_2}}{q_2} \\
+        -C_{\alpha_3+\theta_3}C_{\beta_3} - \frac{eC_{\alpha_3+\theta_3}S_{\beta_3}}{q_3} & -S_{\alpha_3+\theta_3}C_{\beta_3} - \frac{eS_{\alpha_3+\theta_3}S_{\beta_3}}{q_3} & -S_{\beta_3} + \frac{eC_{\beta_3}}{q_3}
+    \end{array} \right]
+\end{equation}
+
+La segunda obtenida, $J_{\theta}$, determina las velocidades de $\theta$ ($\dot{\theta}_{1}, \dot{\theta}_{2}, \dot{\theta}_{3}$): 
+
+\begin{subequations}
+    \begin{eqnarray}
+        J_{\theta} = \left[ \begin{array}{ccc}
+            S_{\alpha_1 + \theta_1}/k_1 & -C_{\alpha_1 + \theta_1}/k_1 & 0 \\
+            S_{\alpha_2 + \theta_2}/k_2 & -C_{\alpha_2 + \theta_2}/k_2 & 0 \\
+            S_{\alpha_3 + \theta_3}/k_3 & -C_{\alpha_3 + \theta_3}/k_3 & 0
+        \end{array} \right] \\
+        k_i = L_D - L_A + q_i C_{\beta_i} + eS_{\beta_i}
+    \end{eqnarray}
+\end{subequations}
+
+La última obtenida, $J_{\beta}$, determina las velocidades de $\beta$ ($\dot{\beta}_{1}, \dot{\beta}_{2}, \dot{\beta}_{3}$): 
+
+\begin{equation}
+    J_{\beta} = \left[ \begin{array}{ccc}
+        eC_{\alpha_1+\theta_1}S_{\beta_1}/q_1 & eS_{\alpha_1+\theta_1}S_{\beta_1}/q_1 & eC_{\beta_1}/q_1 \\
+        eC_{\alpha_2+\theta_2}S_{\beta_2}/q_2 & eS_{\alpha_2+\theta_2}S_{\beta_2}/q_2 & eC_{\beta_1}/q_2 \\
+        eC_{\alpha_3+\theta_3}S_{\beta_3}/q_3 & eS_{\alpha_3+\theta_3}S_{\beta_3}/q_3 & eC_{\beta_3}/q_3
+    \end{array} \right]
+\end{equation}
+\newpage
+
+\subsubsection{Análisis de aceleraciones}
+El análisis de aceleraciones comienza con la obtención del lazo de aceleraciones del brazo, para eso se deriva la cadena de velocidades (Ecuación \ref{Eq:cadenavelocidades}.
+
+\begin{equation}
+    \ddot{\vec{AB}} + \ddot{\vec{BC}} + \ddot{\vec{CD}} = \ddot{\vec{OP}} + \ddot{\vec{PD}}
+    \label{Eq:cadenaaceleraciones}
+\end{equation}
+
+A partir de eso se busca obtener expresiones para las aceleraciones de $\theta, q$ y $\beta$, conociendo la aceleración del efector (ver Ecuación \ref{Eq:ddP}). las cuales mantendrán la siguiente forma:
+
+\begin{equation}
+    \ddot{X} = J_{X} \ddot{P} + B_{X}
+    \label{Eq:AcelerationExample}
+\end{equation}
+
+\begin{equation}
+    \ddot{P} = \left[\begin{array}{c} \ddot{P}_x \\ \ddot{P}_y \\ \ddot{P}_z \end{array} \right]
+    \label{Eq:ddP}
+\end{equation}
+
+En donde $J_{X}$ es el mismo jacobiano obtenido en velocidades, mientras que $B_{X}$ es un vector donde está contenido los efectos de las aceleraciones normales, así como la aceleración de coriolis experimentado por los brazos.
+
+\begin{equation}
+    B_{q} = \left[ \begin{array}{c}
+        L_A\dot{\theta}_1^2\left(q_{1}C_{\beta_1} + eS_{\beta_1}\right)/q_{1}
+        - e\left(2e\dot{\beta}_1^2 + e\dot{\theta}_1^2 - e\dot{\theta}_1^2C_{2\beta_1} + q_{1}\dot{\theta}_1^2S_{2\beta_1}\right)/2q_{1}^2 ~...\\
+        ~~-\left(q_{1}\dot{\beta}_1^2 + q_{1}\dot{\theta}_1^2C_{\beta_1}^2 + 2e\dot{\beta}_1\dot{q}_1 + e\dot{\theta}_1^2S_{2\beta_1}/2\right) \\
+        L_A\dot{\theta}_2^2\left(q_{2}C_{\beta_2} + eS_{\beta_2}\right)/q_{2}
+        - e\left(2e\dot{\beta}_2^2 + e\dot{\theta}_2^2 - e\dot{\theta}_2^2C_{2\beta_2} + q_{2}\dot{\theta}_2^2S_{2\beta_2}\right)/2q_{2}^2 ~...\\
+        ~~-\left(q_{2}\dot{\beta}_2^2 + q_{2}\dot{\theta}_2^2C_{\beta_2}^2 + 2e\dot{\beta}_2\dot{q}_2 + e\dot{\theta}_2^2S_{2\beta_2}/2\right) \\
+        L_A\dot{\theta}_3^2\left(q_{3}C_{\beta_3} + eS_{\beta_3}\right)/q_{3}
+        - e\left(2e\dot{\beta}_3^2 + e\dot{\theta}_3^2 - e\dot{\theta}_3^2C_{2\beta_3} + q_{3}\dot{\theta}_3^2S_{2\beta_3}\right)/2q_{3}^2 ~...\\
+        ~~-\left(q_{3}\dot{\beta}_3^2 + q_{3}\dot{\theta}_3^2C_{\beta_3}^2 + 2e\dot{\beta}_3\dot{q}_3 + e\dot{\theta}_3^2S_{2\beta_3}/2\right)
+    \end{array} \right]
+\end{equation}
+
+\begin{subequations}
+    \begin{eqnarray}
+        B_{\theta} = \left[ \begin{array}{c}
+            \left( 2e\dot{\beta}_1\dot{\theta}_1C_{\beta_1} + 2\dot{\theta_1} \left( \dot{q}_1C_{\beta_1} - q_{1}\dot{\beta}_1S_{\beta_1}\right) \right)/k_1 \\
+            \left( 2e\dot{\beta}_2\dot{\theta}_2C_{\beta_2} + 2\dot{\theta_2} \left( \dot{q}_2C_{\beta_2} - q_{2}\dot{\beta}_2S_{\beta_2}\right) \right)/k_2 \\
+            \left( 2e\dot{\beta}_3\dot{\theta}_3C_{\beta_3} + 2\dot{\theta_3} \left( \dot{q}_3C_{\beta_3} - q_{3}\dot{\beta}_3S_{\beta_3}\right) \right)/k_3 \\
+        \end{array} \right] \\
+        k_i = L_D - L_A + q_i C_{\beta_i} + eS_{\beta_i}
+    \end{eqnarray}
+\end{subequations}
+
+\begin{equation}
+    B_{\beta} = \left[ \begin{array}{c}
+        \left(-(L_A - L_D)\dot{\theta}_1^2S_{\beta_1} + e\left(\dot{\beta}_1^2 + \dot{\theta}_1^2S_{\beta_1}^2\right) + q_{1}S_{2\beta_1}\dot{\theta}_1^2/2 + 2\dot{\beta}_{1}\dot{q}_1\right)/q_{1} \\
+        \left(-(L_A - L_D)\dot{\theta}_2^2S_{\beta_2} + e\left(\dot{\beta}_2^2 + \dot{\theta}_2^2S_{\beta_2}^2\right) + q_{2}S_{2\beta_2}\dot{\theta}_2^2/2 + 2\dot{\beta}_{2}\dot{q}_2\right)/q_{2} \\
+        \left(-(L_A - L_D)\dot{\theta}_3^2S_{\beta_3} + e\left(\dot{\beta}_3^2 + \dot{\theta}_3^2S_{\beta_3}^2\right) + q_{3}S_{2\beta_3}\dot{\theta}_3^2/2 + 2\dot{\beta}_{3}\dot{q}_3\right)/q_{3}
+    \end{array} \right]
+\end{equation}
+
+\newpage
+\subsection{Comparativo con modelo SimMechanics}
+Para la validación de las expresiones obtenidas en la sección anterior, se estableció un modelo en MATLAB/SIMULINK\textsuperscript{\textcopyright}, haciendo del paquete de simulación de múltiples cuerpos, SimMechanics. Para llevar a cabo esta comparación se dispusieron de las siguientes dimensiones: $R_b = 683.01~mm$, $L_A = 70.00~mm$, $L_D = 200.00~mm$ y $e = 57~mm$.
+
+\begin{figure}[hb!]
+    \centering
+    \begin{subfigure}{0.9\textwidth}
+        \includegraphics[width = \linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/EsquemaSimMechanicsGeneral.png}
+        \caption{Esquema del Simulink General}
+    \end{subfigure}
+    \begin{subfigure}{0.9\textwidth}
+        \includegraphics[width = \linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/EsquemaSimMechanicsArm.png}
+        \caption{Esquema del Simulink Brazo}
+    \end{subfigure}
+    \begin{subfigure}{0.6\textwidth}
+        \includegraphics[width = \linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/ModelosSimMechanicsSolid.PNG}
+        \caption{Visualización del SimMechanics}
+    \end{subfigure}
+    \caption{Esquema del modelo en SimMechanics}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Theta1.png}
+        \caption{$\theta_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Beta1.png}
+        \caption{$\beta_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Theta2.png}
+        \caption{$\theta_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Beta2.png}
+        \caption{$\beta_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Theta3.png}
+        \caption{$\theta_3$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Beta3.png}
+        \caption{$\beta_3$}
+    \end{subfigure}
+    \caption{Comparación de posiciones de las revolutas $\theta$, $\beta$}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Q1.png}
+        \caption{$q_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Q2.png}
+        \caption{$q_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Q3.png}
+        \caption{$q_3$}
+    \end{subfigure}
+    \caption{Comparación de posiciones de los actuadores $q$}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Thetapunto1.png}
+        \caption{$\dot{\theta}_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/betapunto1.png}
+        \caption{$\dot{\beta}_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Thetapunto2.png}
+        \caption{$\dot{\theta}_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/betapunto2.png}
+        \caption{$\dot{\beta}_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Thetapunto3.png}
+        \caption{$\dot{\theta}_3$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/betapunto3.png}
+        \caption{$\dot{\beta}_3$}
+    \end{subfigure}
+    \caption{Comparación de velocidades de las revolutas $\dot{\theta}$, $\dot{\beta}$}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Qpunto1.png}
+        \caption{$\dot{q}_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Qpunto2.png}
+        \caption{$\dot{q}_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Qpunto3.png}
+        \caption{$\dot{q}_3$}
+    \end{subfigure}
+    \caption{Comparación de velocidades de los actuadores $\dot{q}$}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/ThetaPPunto1.jpg}
+        \caption{$\ddot{\theta}_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/BetaPPunto1.jpg}
+        \caption{$\ddot{\beta}_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/ThetaPPunto2.jpg}
+        \caption{$\ddot{\theta}_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/BetaPPunto2.jpg}
+        \caption{$\ddot{\beta}_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/ThetaPPunto3.jpg}
+        \caption{$\ddot{\theta}_3$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/BetaPPunto3.jpg}
+        \caption{$\ddot{\beta}_3$}
+    \end{subfigure}
+    \caption{Comparación de aceleraciones de las revolutas $\ddot{\theta}$, $\ddot{\beta}$}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/QPPunto1.jpg}
+        \caption{$\ddot{q}_1$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/QPPunto2.jpg}
+        \caption{$\ddot{q}_2$}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/QPPunto3.jpg}
+        \caption{$\ddot{q}_3$}
+    \end{subfigure}
+    \caption{Comparación de aceleraciones de los actuadores $\ddot{q}$}
+\end{figure}
+
+\newpage
+\subsection{Dimensionamiento Cinematico del Mecanismo}
+\input{Cap4_DisenoBasico/Optimization.tex}
+
+\newpage
+\input{Cap4_DisenoBasico/DisenoBasicoMecanismoCinetico.tex}

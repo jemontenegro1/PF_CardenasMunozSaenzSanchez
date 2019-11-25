@@ -1,0 +1,103 @@
+\section{Diseño Básico del Husillo}
+Para el básico del sistema de corte motor-husillo se toma como guía los catálogos de herramientas de corte  \cite{catalogue:CatalogoC006s} y \cite{catalogue:Blue_Master} , para asi obtener los parámetros corte y variables a considerar para el cálculo de potencia de corte ($P_c$). 
+
+\subsection{Parámetros de corte recomendados para fresas HSS-Co8}
+
+En el dimensionamiento del motor-husillo se utilizaron parámetros de corte recomendados por el fabrícate de fresas \cite{catalogue:Blue_Master} donde especifica las velocidades de corte ($V_C$) y velocidades de avance($V_f$) dependiendo del material del que está hecha la pieza de trabajo y las características de la herramienta de corte fresa. En este mismo catalogo también recomiendo ancho de corte($e_p$) y profundidad de corte ($a_p$), los cuales depende del diámetro de la herramienta de corte y el tipo de operación.. Los diámetros con lo que se quiere trabajar en las operaciones de fresado esta entre 2 a 18 mm y los materiales de las piezas a trabajar serán aluminio y acero blando. Los parámetros se presentaron en la tabla \ref{table:Parametro_de_corte}.\\
+\input{Cap4_DisenoBasico/Tablas/Parametro_de_corte.tex}
+En la Figura \ref{fig:Profun} se presenta las profundidades recomendadas para tres distintas operaciones.  
+
+\begin{figure}[hbt]
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{Cap4_DisenoBasico/Figura/Fresado_Lateral.PNG}
+        \caption{Fresado Lateral}
+        \label{fig:Fresado_Lateral}
+    \end{subfigure} 
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{Cap4_DisenoBasico/Figura/Ranurado.PNG}
+        \caption{Vaciado}
+        \label{fig:VAciado}
+    \end{subfigure} 
+    \centering
+    \begin{subfigure}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.9\linewidth]{Cap4_DisenoBasico/Figura/Basto.PNG}
+        \caption{Basto}
+        \label{fig:Basto}
+    \end{subfigure} 
+    \caption{Profucidad y ancho de corte recomendada del fresado}{Fuente: \citep{catalogue:Blue_Master}}
+    \label{fig:Profun}
+\end{figure}
+
+Para preservar la vida útil de herramienta de corte y tener un menor consumo de potencia se plantea que para el aluminio en el fresado Basto la profundidad corte ($a_p$) a partir del diámetro de 8 mm en adelante será de 10 $mm$ y para el fresado ranurado o vaciado la profundidad es $0.3$ el diametro de la fresa. De igual forma para el acero blando se toma tambien una progundidad de corte similar a la de fresado basto pero el ancho de corte será $0.25$ el diametro de la herramienta, y en el ranurado la profundidad de corte será $0.2$ el diametro de la herramineta de fresado. En la tabla \ref{table:Profundidad_aluminio} y la tabla \ref{table:Profundidad_acero} se presentará el ancho y profundidad de corte para los tipos de fresado .
+
+Con los parámetros ya obtenidos, se procede a usar la expresión encontrada en catálogo de \cite{catalogue:CatalogoC006s} donde,  relacionan los parámetros de corte con un término llamado presión especifica de corte que esta tabulada con respecto al avance por diente. La ecuacion \ref{Eq:P_c} es la expresión para el calculo de la potencia de corte.
+
+\input{Cap4_DisenoBasico/Tablas/Profundidad_y_Ancho_de_corte_aluminio.tex}
+\input{Cap4_DisenoBasico/Tablas/Profundidad_y_ancho_del_acero.tex}
+\begin{equation}
+    P_{c}=\frac{a_{p}*a_{e}*f_{r}*K_{c}}{60*10^6*\eta}
+    \label{Eq:P_c}
+\end{equation}
+Donde $a_{e}$ es el ancho de corte en ($mm$), $a_{p}$ es la profundidad de corte en $mm$, $f_{r}$ es la velocidad de avance en ($mm/min$), $\eta $ es la eficiencia de la operación que depende del desgate de la herramienta y de la máquina, y $K_{c}$ es  la presión especifica  de corte que depende del materia y de la carga de viruta $f$.
+
+\newpage
+\subsection{Potencias y Pares requeridos para fresado.}
+
+En catalogo \cite{catalogue:CatalogoC006s} existe la tabla la cual relaciona la el avance por diente o la carga de viruta con la presión especifica $K_{c}$ de distintos materiales como acero dulce, acero para herramientas, titanio y aluminios. Se tomará la presión especifica de corte con la carga de viruta de 0.1$mm/diente$ ya que este da el mayor valor de este parámetro para cada material. Los materiales que se tomaron para el cálculo fueron una aleación ligera de aluminio (Al-Zn-Mg-Cu) y un acero con una resistencia a la tracción similar a la del catálogo \cite{catalogue:Blue_Master} el cual fua un acero para herramientas con una resistencia a la tracción de 670 $Mpa$. En la tabla \ref{table:K_C} se muesta los valores de la la presion especifica de corte.
+\input{Cap4_DisenoBasico/Tablas/Kc.tex}
+
+%table:Potencia_de_corte_A
+Las potencias de actuales para el fresado del aluminio y el acero blando se calcularon con la ecuación \ref{Eq:P_c} y presentan en las tablas \ref{table:Potencia_de_corte_A} y \ref{table:Potencia_de_corte_Acero} respectivamente. Con los resultados de las potencias se busca los pares máximos que requiere para los distintos materiales (aluminio, acero) con la ecuación \ref{Eq:T_{r}}. 
+
+\input{Cap4_DisenoBasico/Tablas/Potencias_del_aluminio.tex} \newpage
+\input{Cap4_DisenoBasico/Tablas/Potencia_Acero.tex}
+
+\begin{equation}
+    T_{r}=\frac{P_{c}}{w_{c}}
+    \label{Eq:T_{r}}
+\end{equation}
+
+Donde $w_{c}$ es la velocidad angular de la herramienta de corte, $P_{c}$ la potencia actual y $T_{r}$ es el Par requerido para la operación de fresado. En la tabla \ref{table:Par_r} se presenta los pares máximos para la operación de corte en aluminio y acero blando.
+\input{Cap4_DisenoBasico/Tablas/Par_r.tex}
+\newpage
+\subsection{Diseño básico de transmisión de potencia}
+
+Se necesita diseñar un sistema Reductor-Amplificador de velocidades con relación variable, con el fin de proveer el par necesario y las velocidades requeridas provenientes del motor husillo hacía la herramienta de corte, se necesitan múltiples etapas debido a la variedad de materiales que se podrán mecanizar con la maquina CNC, estos constan con diferentes propiedades, por lo cual se hace necesario diferentes parámetros de corte, entre estos la velocidad de giro de la herramienta.
+\subsection*{Datos y suposiciones}
+Con base a los datos de velocidades de giro críticas de la herramienta y las especificaciones del husillo, se determinan las relaciones de transmisión y el número de etapas necesarias para la operación (tabla \ref{table:Relaciones_de_Transmición})
+
+\input{Cap4_DisenoBasico/Tablas/Transmicion.tex}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =0.5\textwidth, trim = {2cm, 0, 2cm, 0}]{Cap4_DisenoBasico/Figura/caja.pdf}
+    \caption{Esquema básico del sistema de transmición}{Fuente: Elaboración propia}
+    \label{fig:Transmición}
+\end{figure}
+
+\begin{table}[hbt]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Dientes $N^{\circ}$} & \textbf{$N^{\circ}$ de dientes} \\ \hline
+        1 & 34 \\ \hline
+        2 & 34 \\ \hline
+        3 & 51 \\ \hline
+        4 & 17 \\ \hline
+        5 & 45 \\ \hline
+        6 & 23 \\ \hline
+        7 & 34 \\ \hline
+        8 & 34 \\ \hline
+    \end{tabular}
+    \caption{Número de dientes}
+    \label{table:Transmición}
+\end{table}
+
+
+En la figura \ref{fig:Transmición}, se presenta un esquema de la caja de transmisión con el cual se trabajará a detalle posteriormente, esta cuenta con 8 engranajes y tres ejes, uno de entrada, uno de salida y uno intermedio. El número de dientes de cada engranaje se especifican en la tabla \ref{table:Transmición}.
+
+\newpage

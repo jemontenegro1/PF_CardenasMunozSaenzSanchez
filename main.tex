@@ -5,13 +5,13 @@
 %\usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
 %% Añadir varias imagenes en una sola
+\usepackage{graphicx}
 \usepackage{epsfig}
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{float}
 %% Poder citar en APA
 \usepackage{natbib}
-%\usepackage[numbers]{natbib}
 \bibliographystyle{apalikees}
 %% Hipervinculos para las citas y secciones
 \usepackage{hyperref}
@@ -23,6 +23,8 @@
 }
 %% Sub ecuaciones
 \usepackage{amsmath}
+%% Importar codigo Python
+\usepackage{listings}
 %% Para la creación de Tablas
 \usepackage[normalem]{ulem}
 \useunder{\uline}{\ul}{}
@@ -66,17 +68,23 @@
     %%%%%   Capitulo 1 : Formulacion del Proyecto    %%%%%
     \input{Cap1_FormulaciondelProyecto/FormulaciondelProyecto}
     
-    %%%%%   Capitulo 2 : Diseño de Especificaciones    %%%%%
+    %%%%%%   Capitulo 2 : Diseño de Especificaciones    %%%%%
     \input{Cap2_DisenoEspecificaciones/DisenodeEspecificaciones.tex}
     
     %%%%%   Capitulo 3 : Diseño Conceptual    %%%%%
     \input{Cap3_DisenoConceptual/DisenoConceptual.tex}
     
+    %%%%   Capitulo 4 : Diseño Basico    %%%%%
+    \input{Cap4_DisenoBasico/DisenoBasico.tex}
+    
+    %%%%%   Capitulo 5 : Diseño Basico    %%%%%
+    \input{Cap5_DisenoDetallado/DisenoDetallado.tex}
+    
     %%%%%   Capitulo X : Bibliografia    %%%%%
     \addcontentsline{toc}{chapter}{\numberline{}Bibliografia} 
     \bibliography{Bibliografia}
-    
-    \setcounter{chapter}{0}
+    %
+    %\setcounter{chapter}{0}
     \renewcommand{\thechapter}{\Alph{chapter}}
     %%%%%   Capitulo X : Anexos    %%%%%
     \input{CapX_Anexos/Anexos.tex}
