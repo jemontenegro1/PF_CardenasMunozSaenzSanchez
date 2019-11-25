@@ -49,7 +49,10 @@ Para iniciar el análisis se procede a calcular valores geométricos que se nece
  \phi_{t}=\arctan{\frac{\tan{\phi_{n}}}{\cos{\psi}}}
 \label{Eq:1}    
 \end{equation}
-donde, $ \phi_{t}$  es el ángulo de presión transversal, $\phi_{n}$ es el ángulo de presión normal y el $\psi$ es el Angulo de hélice.
+Donde:\\
+$ \phi_{t}$=Ángulo de presión transversal.\\
+$\phi_{n}$=Ángulo de presión normal.\\
+$\psi$=Ángulo de hélice.
 
 %revisar con jairo
 $\phi_t = 21.1728$, $m=2.5$,    Ancho de caro, $F = 12\times m = 30~mm$, paso normal, $P_n=\pi \times m$, donde m es el modulo.
@@ -57,9 +60,11 @@ $\phi_t = 21.1728$, $m=2.5$,    Ancho de caro, $F = 12\times m = 30~mm$, paso no
 Para la evaluación de intermitencia se calcula un ancho de cara mínimo para el engranaje, este se calcula con la ecuación \ref{Eq:2} de la AGMA Tomada  del \citep{shigley2011shigley}.
 \begin{equation}
  F_{min}=b_{min}=\frac{1.15 P_{n}}{\tan{\psi}}
+ F_{min}= 24.8154 mm
 \label{Eq:2}    
 \end{equation}
-$F_{min}= 24.8154~mm$
+
+
 Con un ancho de cara mayor a un ancho de cara mínimo, se descarta el modo de falla de intermitencia.
 \subsubsection*{Interferencia}
 La interferencia en los engranajes helicoidales va relacionada con el numero de dientes, un numero de dientes muy pequeño, podría causar un problema de interferencia, por la cual se procede a calcular el número de dientes mínimo  \ref{Eq:3}, para evitar este modo de falla.
@@ -67,42 +72,54 @@ La interferencia en los engranajes helicoidales va relacionada con el numero de 
  N_{p,min}=\frac{2K \cos{\psi}(i+\sqrt{i^{2}+(1+2i\sin{\phi_{t}}^{2})}}{(1+2i)\sin{\phi_{t}}^{2}}
 \label{Eq:3}    
 \end{equation}
-Donde k es un factor relacionado con el diente = 1 para dientes completos.
-\\\\
-Np= 8.0225 dientes\\
+Donde:\\
+K=factor relacionado con el diente = 1 para dientes completos.
 
-Finalmente, para el diseño cinemático se evaluo la falla por ruido, este se evaluará estimando la velocidad tangencial en la línea de paso, si esta es inferior a 200m/s se considera que el engranaje no fallara por ruido.
+\begin{center}
+    Np= 8.0225 dientes    
+\end{center}
+
+Finalmente, para el diseño cinemático se evaluo la falla por ruido, este se evaluará estimando la velocidad tangencial en la línea de paso, si esta es inferior a 200m/s se considera que el engranaje no fallará por ruido.
 \begin{equation}
  v_{t}=w_{p}(\frac{rad}{min})\cdot\frac{2\pi rad}{60 s}\cdot\frac{r_{p}(mm)}{1000mm}:(\frac{m}{s})
 \label{Eq:4}    
 \end{equation}
-Vt=37.88 m/s\\\\
+
+\begin{center}
+    $V_{t}=37.88 m/s$
+\end{center}
+
 Para el diseño de los demás engranajes, se procedió de la misma forma que con el engranaje $N° 1$, el resultado de esto se encuentra en la table \ref{table:Diseño_CM}.
 \input{Cap5_DisenoDetallado/Tablas/Diseño_detalle_Engranages.tex}
 \subsection*{Diseño cinético}
 \subsubsection*{Fatiga flexional}
-Para evaluar el modo de falla de fatiga flexional en el engranaje, se debe calcular la fuerza tangencial, esta se calcula teniendo en cuenta la potencia consumida y la velocidad tangencial en la línea de paso del engranaje ecuación .Nota: se escogieron las velocidades de operación mas bajas dado que con estas se obtienen los pares mas altos y por lo tanto las fuerzas más grandes.
+Para evaluar el modo de falla de fatiga flexional en el engranaje, se debe calcular la fuerza tangencial, esta se calcula teniendo en cuenta la potencia consumida y la velocidad tangencial en la línea de paso del engranaje ecuación \ref{eq:xx}. Nota: se escogieron las velocidades de operación mas bajas dado que con estas se obtienen los pares mas altos y por lo tanto las fuerzas más grandes.
 \begin{equation}
 F_{t} = \frac{Potencia}{velocidad}  
-\frac{160W}{6.675 m/s}=23.96 N
+\frac{1100 W}{6.675 m/s}=165 N
+ \label{eq:xx}
 \end{equation}
-%%ERROR EN CITA, CENTRAR RESULTADOS
-Una vez calculada la fuerza tangencial, se procede a calcular el esfuerzo flexionante según la norma AGMA  \ref{Eq:5}, adicionalmente a la fuerza tangencial se agregó un factor de seguridad de 2 para tener en cuenta casos en los cuales existan sobrecargas.
+
+Una vez calculada la fuerza tangencial, se procede a calcular el esfuerzo flexionante según la norma AGMA  Ecuación \ref{Eq:5}, adicionalmente a la fuerza tangencial se agregó un factor de seguridad de 2 para tener en cuenta casos en los cuales existan sobrecargas.
 
 \begin{equation}
  \sigma_{AGMA}=W_{t}[N]K_{o}K_{v}K_{s}\cdot \frac{1}{F{mm}\cdot m[mm]} \cdot \frac{K_{H}K_{B}}{J} \cdot K_{i}
 \label{Eq:5}    
 \end{equation}
+
 Donde:\\
-F: Ancho de cara (mm)
-Ki: Es el factor de engranaje intermedio=1.\\
-J: Factor geométrico de forma del diente=0.4.\\
-Ko: Factor de sobrecarga: 1.5.\\
-Kv :Factor dinámico: 1.1.\\
-Ks: Factor de tamaño: 1.5.\\
-KH: Factor de carga: 1.6.\\
-KB: Factor de espesor del aro:1.\\
-Esfuerzo AGMA = 5.5 MPa.\\
+F=30mm: Ancho de cara.\\
+Ki=1: Factor de engranaje intermedio.\\
+J:=0.4: Factor geométrico de forma del diente.\\
+Ko=1.5: Factor de sobrecarga.\\
+Kv=1.1:Factor dinámico.\\
+Ks=1.5: Factor de tamaño: .\\
+KH=1.6 : Factor de carga: .\\
+KB=1: Factor de espesor del aro.
+\begin{center}
+    $\sigma_{AGMA}$ = 24.2 MPa.
+\end{center}
+
 
 Para verificar el diseño se calcula un factor de seguridad tomando como referencia un esfuerzo permisible de flexión, el cual se calcula con la ecuación \ref{Eq:6}
 
@@ -111,11 +128,24 @@ Para verificar el diseño se calcula un factor de seguridad tomando como referen
 \label{Eq:6}    
 \end{equation}
 Donde 
-St: Esfuerzo de flexión permisible: 170
-YN: Factor de ciclos de esfuerzo para fatiga flexional: 1
-Yz: Factor de confiabilidad: 1.5
-Yθ: Factor de temperatura: 1
-Fs= 20 
+St=170: Esfuerzo de flexión permisible.\\
+YN=1: Factor de ciclos de esfuerzo para fatiga flexional: \\
+Yz=1.5: Factor de confiabilidad:.\\
+Yθ=1: Factor de temperatura:.\\
+
+\begin{equation}
+ \sigma_{F,perm}=\frac{113.33  MPa}{FS_{F}}  
+\label{Eq:sagama}    
+\end{equation}
+
+Una vez con un calculado el valor de referencia para el esfuerzo se procede a calcular el factor de seguridad, igualando el esfuerzo permisible con el esfuerzo calculado con la norma AGMA, ecuación \ref{Eq:FS}
+
+\begin{equation}
+ {FS_{F}}=\frac{\sigma_{F,perm}}{\sigma_{AGMA}} =\frac{113.33  MPa}{24.2 MPa} = 4.68 
+\label{Eq:FS}    
+\end{equation}
+
+
 
 Una vez comprobado que no falla por Fatiga flexional, se procede a calcular fatiga superficial.
 \subsubsection*{Fatiga superficial}
@@ -123,21 +153,28 @@ Una vez comprobado que no falla por Fatiga flexional, se procede a calcular fati
  \sigma_{c}=Z_{e}\cdot \sqrt{\frac{N}{mm^{2}}} \cdot \sqrt{W_{t}[N]K_{o}K_{v}K_{s} \cdot \frac{K_{H}Z_{R}}{d_{p}[mm]F[mm]I}}
 \label{Eq:7}    
 \end{equation}
-Donde: 
-ZE: Coeficiente elástico:191 MPa
-ZR: Factor de condición superficial: 1
-I: Factor geométrico de resistencia superficial:  0.138
-Esfuerzo C =130.78
+Donde: \\
+ZE= 191 MPa: Coeficiente elástico.\\
+ZR=1: Factor de condición superficial.\\
+I=0.138: Factor geométrico de resistencia superficial.
+\begin{center}
+$\sigma_{c}$ =274.34 MPa.
+
+\end{center}
+
+
 Igualmente, que en fatiga flexionaste se busca un factor de seguridad que garantice el diseño, para esto se toma como referencia al esfuerzo permisible ecuación \ref{Eq:8}.
 \begin{equation}
     \sigma_{c,perm}=S_{c}\cdot \frac{Z_{n}Z_{w}}{Y_{\theta}Y_{z}}
     \label{Eq:8}
 \end{equation}
-Donde: 
-Sc: esfuerzo superficial permisible: 1100 MPA
-ZW: Factor de relación de dureza: 1
-ZN: Factor de vida de ciclos de esfuerzos: 1
-Esfuerzo c permi= 733.33 MPa
+Donde:\\ 
+Sc=1100 MPA: Esfuerzo superficial permisible.\\
+ZW=1: Factor de relación de dureza.\\
+ZN=1: Factor de vida de ciclos de esfuerzos.\\
+\begin{center}
+    $\sigma_{c, permi}$= 733.33 MPa
+\end{center}
 
 Una vez calculado un valor de referencia se procede a calcular el factor de seguridad con la ecuación \ref{Eq:9}
 
@@ -145,20 +182,34 @@ Una vez calculado un valor de referencia se procede a calcular el factor de segu
     Fs_{c}=(\frac{\sigma_{c,perm}}{\sigma_{c}})^{2}
     \label{Eq:9}
 \end{equation}
-Donde:
-FSc: factor de seguridad AGMA
-FSc=5.6
+Donde:\\
+FSc: factor de seguridad AGMA.
+\begin{center}
+    FSc=2.67
+\end{center}
 
-Este proceso se repitió para cada engranaje, tanto fatiga flexiónate como superficial, el resultado se encuentra en las tablas \ref{table:fatiga_flexionante}, y y z
+
+Los calculos se repitieron para cada engranaje, tanto fatiga flexiónate como superficial, con el fin de verificar que todos los engranajes resistieran a los modos de falla evaluados, los resultado se encuentra en las tablas \ref{table:fatiga_flexionante}, y y z
 
 \input{Cap5_DisenoDetallado/Tablas/Fatiga_flexionante.tex}
+
+\input{Cap5_DisenoDetallado/Tablas/Fatiga_flexionante_FS.tex}
 \input{Cap5_DisenoDetallado/Tablas/Fatiga_superficial.tex}
-\input{Cap5_DisenoDetallado/Tablas/Flexionante_2.tex}
-\input{Cap5_DisenoDetallado/Tablas/superficie2.tex}
+
+\input{Cap5_DisenoDetallado/Tablas/superficie_FS.tex}
+\newpage
+
+\subsection{Planos}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width =0.65\textwidth]{Cap5_DisenoDetallado/Figuras/motor_electrico.PDF}
+    \caption{Plano del Servo motor}{Fuente:Elaboración propia}
+    \label{fig:Motor_servo}
+\end{figure}
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width =0.9\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
+    \includegraphics[width =0.65\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
     \caption{Plano del engranaje}{Fuente:Elaboración propia}
     \label{fig:Planos_engranaje}
 \end{figure}
@@ -166,7 +217,8 @@ Este proceso se repitió para cada engranaje, tanto fatiga flexiónate como supe
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width =0.9\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
+    \includegraphics[width =0.65\textwidth]{Cap5_DisenoDetallado/Figuras/eje2.PDF}
     \caption{Plano del eje}{Fuente:Elaboración propia}
     \label{fig:Planos_eje}
 \end{figure}
+

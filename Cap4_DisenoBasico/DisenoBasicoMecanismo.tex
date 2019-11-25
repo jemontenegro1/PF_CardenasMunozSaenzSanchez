@@ -362,3 +362,38 @@ Para la validación de las expresiones obtenidas en la sección anterior, se est
 
 \newpage
 \input{Cap4_DisenoBasico/DisenoBasicoMecanismoCinetico.tex}
+
+\newpage
+\subsection{Dimensionamiento Cinético del Mecanismo}
+Para el dimensionamiento cinético del mecanismo aplicado para las operaciones de maquinado se deben seguir diseñar contra los modos de falla más críticos de la operación. Para este caso el diseño básico se centró en la falla por deformación excesiva, la cual causa una pérdida de la precisión y seguimiento a la trayectoria por parte del dispositivo. Con este fin se dispuso del análisis de rigidez, sirviendo de herramienta matemática la obtención del resto de las dimensiones del mecanismo. Esto recordando que las longitudes fueron determinadas en el diseño cinemático, siendo estas $R_b = 675~mm, L_A = 50~mm, L_D = 249~mm$ y $e = 0~mm$.
+
+El dimensionamiento fue realizado por un método iterativo se suponían unas dimensiones de las secciones transversales de los distintos elementos, observando la distribución de los desplazamientos que podía alcanzar el efector final a lo largo del espacio de trabajo. además se supuso que las fuerzas de corte estaba alineadas en el eje X y con un valor de $1.5~kN$.
+
+\begin{longtable}{|c|c|c|c|c|}
+    \hline
+    \rowcolor[gray]{0.85}
+     &  &  & \textbf{Parámetros} & \textbf{Parámetros} \\
+    \rowcolor[gray]{0.85} \textbf{Componente} & \textbf{Perfil Transversal} & \textbf{Dimensiones} & \textbf{iniciales} & \textbf{finales} \\
+    \rowcolor[gray]{0.85} & & & mm & mm \\\hline
+    Base
+         & Tuberia Rectangular \Rectpipe & $H,B,t$ & $70,40,5$ & $50,150,10$ \\ \hline
+    \multirow{2}{*}{Revoluta AB}
+         & Rectangular $\blacksquare$ & $H,B$ & $80,45$ & $80,45$ \\
+         & Rectangular $\blacksquare$ & $H,B$ & $20,80$ & $20,80$ \\ \hline
+    RevolutaBC
+         & Rectangular $\blacksquare$ & $H,B$ & $45,45$ & $30,45$ \\ \hline
+    Eje del Brazo
+         & Circular $\bullet$         & $D$   & $16$    & $25.4$  \\ \hline
+    Soporte del Eje
+         & Rectangular $\blacksquare$ & $H,B$ & $45,45$ & $45,45$ \\ \hline
+    Brazo
+         & Viga en T \Tsteel          &$H,B,t$& $150,100,10$ & $150,100,15$ \\ \hline
+    Revoluta D
+         & Rectangular $\blacksquare$ & $H,B$ & $60,60$ & $70,70$ \\ \hline
+    Revoluta DP
+         & Rectangular $\blacksquare$ & $H,B$ & $60,60$ & $50,70$ \\ \hline
+    \caption{Parámetros iniciales y finales para probar el mecanismo}
+\end{longtable}
+
+Luego de establecer los parámetros, prosiguió a evaluar bajo las condiciones de operación los desplazamientos alcanzados por el efector a lo largo del espacio de trabajo discretizado en una nube de puntos. Generando el siguiente histograma, ver Figura \ref{fig:Comparacion}, en donde se puede observar la distribución de los desplazamientos de $P$, mostrando que los parámetros iniciales presenta una alta variabilidad a lo largo del espacio de trabajo mientras que los parámetros finales presenta una baja variabilidad y un promedio mucho más bajo que el de los iniciales.
+

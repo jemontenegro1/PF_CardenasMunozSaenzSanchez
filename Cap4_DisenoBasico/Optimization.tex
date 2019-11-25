@@ -1,5 +1,5 @@
 En el diseño cinemático del mecanismo resulta de vital importancia un adecuado dimensionamiento de los elementos debido a el impacto que estos tienen en el desempeño del mismo. Esto lleva a buscar una manera de cuantificar y evaluar el desempeño cinemático de los robots por lo cual se propone utilizar alguno índices de desempeños propuestos en la literatura que relacionan las dimensiones y cinemática del mecanismo con el control, precisión, destreza e isotropía por todo el espacio de trabajo. 
-Para la evaluación del desempeño cinemático del mecanismo se utiliza el Índice global de desempeño cinemático (Global Kinematic Performance Index) el cual está basado en la combinación de 4 índices de desempeño cinemático que son:
+Para la evaluación del desempeño cinemático del mecanismo se utiliza el Índice global de desempeño cinemático \citep{zhang2014GlobalI} el cual está basado en la combinación de 4 índices de desempeño cinemático que son:
 
 \textbf{Manipulabilidad}\newline
 El índice de manipulabilidad brinda una medida de la capacidad general de posicionamiento y orientación de los actuadores sobre el efector final del mecanismo.
@@ -107,7 +107,7 @@ plt.xlabel('# Generaciones')
 plt.show()
 \end{lstlisting}
 
-El proceso de optimización con el algoritmo genético inicia con la generación de una poblacion aleatoria de cromosomas, es decir, generar un conjunto de soluciones posibles \textbf{new_population}. El siguiente paso es evaluar el desempeño de tal poblacion, para esto se considera el calculo del indice global de desempeño cinematico en los puntos discretizados \textbf{P} del espacio de trabajo. Para cada cromosoma de la población se obtienen los 4 indices descritos previamente, la integracion de estos y el valor del índice global.
+El proceso de optimización con el algoritmo genético inicia con la generación de una poblacion aleatoria de cromosomas, es decir, generar un conjunto de soluciones posibles new\_Population. El siguiente paso es evaluar el desempeño de tal poblacion, para esto se considera el calculo del indice global de desempeño cinematico en los puntos discretizados P del espacio de trabajo. Para cada cromosoma de la población se obtienen los 4 indices descritos previamente, la integracion de estos y el valor del índice global.
 
 \begin{lstlisting}[frame=single,language = python]  % Start your code-block
 
@@ -121,8 +121,8 @@ def fitnessK(population,P):
     return fitness_population
 \end{lstlisting}
 
-A continuación se realiza la selección de los cromosomas más fuertes (aquellos con el desempeño más alto), los cuales sobreviviran y serán base para la generación siguiente.
-
+A continuación se realiza la selección de los cromosomas elites (aquellos con el desempeño más alto), los cuales sobreviviran y serán base para la generación siguiente.
+~
 \begin{lstlisting}[frame=single,language = python]  % Start your code-block
 
 def select_parents(pop, fitness, num_parents):
@@ -135,7 +135,67 @@ def select_parents(pop, fitness, num_parents):
     return parents
 \end{lstlisting}
 
+Estos cromosomas seleccionados pasaran por ciertos operadores geneticos con lo cual se crearan nuevos cromosomas, es decir, nuevas soluciones. Entre los operadores geneticos se encuentra la funcion de entrecruzamiento, donde se generan nuevos cromosomas resultado de la combinación de genes de los padres seleccionados. Dentro de esta desendencia ocurre una operación genetica adicional, mutación, donde de manera aleatoria un cierto numero de cromosomas mutan modifcandose un gen aleatorio dentro de estos por un valor aleatorio dentro del rango posible definido.
+~
+\begin{lstlisting}[frame=single,language = python]  % Start your code-block
 
+def crossover(parents,num_children):
+    children = np.zeros([num_children,parents.shape[1]])
+    crossover_point = np.int(parents.shape[1]/2)
+    for child in range(num_children):  
+        parent1_index = child%parents.shape[0]
+        parent2_index = (child+1)%parents.shape[0]
+        if (child<num_children/2):  
+            children[child, 0:crossover_point] = 
+                parents[parent1_index,0:crossover_point]
+            children[child, crossover_point:] = 
+                parents[parent2_index,crossover_point:]
+        else:
+            children[child, 0:crossover_point] = 
+                parents[parent2_index,0:crossover_point]
+            children[child, crossover_point:] = 
+                parents[parent1_index,crossover_point:]
 
+    return children
 
+def mutation(offspring_cross,span,threshold):
+    for child in range(offspring_cross.shape[0]):
+        p = np.random.uniform(0,1,1)
+        if p < threshold :
+            k = np.random.randint(0, offspring_cross.shape[1])
+            print('Mutation on child: ', child,' - Gen: ', k, '\n')
+            mut_value = np.random.uniform(span[0][k], span[1][k], 1)
+            offspring_cross[child,k] = mut_value
+    
+    return offspring_cross
+\end{lstlisting}
+~
+Estos nuevos cromosomas se juntan a los cromosomas elites para formar la nueva población o nueva generación que sera evaluada nuevamente, y asi de manera repetitiva durante un cierto número de generaciones. Con este procedimiento generación tras generación el indice de desempeño cinematico global del mecanismo va mejorando, cabe resaltar la importancia de la mutacion de los genes con el fin de no estancarse en maximos locales.
 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[height = 0.4\textheight,width=0.8\textwidth]{Cap4_DisenoBasico/Figura/Ga/IndiceenlasGeneraciones.eps}
+    \caption{Indice Global de Desempeño Cinematico}
+    \label{fig:Generaciones}
+\end{figure}
+\newpage
+El algoritmo genetico de optimización se ejecuto 120 generaciones para una población de 25 cromosomas teniendo en cuenta las siguientes variables a optimizar y sus rangos de valores admisibles.\newline
+$R_b$ = [500: 1000] mm \newline
+$L_A$ = [50: 250] mm \newline
+$L_D$ = [50: 250] mm \newline
+$e$  = [-100: 100] mm \newline
+
+Los resultados del algortimo genetico nos proporcionaron las siguientes medidas para un dimensionamiento optimo, obteniendo un indice global de desempeño cinematico de 1.5462 \newline
+$R_b$ =  675.0946 mm \newline
+$L_A$ = 50.0819 mm \newline
+$L_D$ = 249.3099 mm \newline
+$e$  = 0.0048 mm \newline
+
+A continuación, se presenta la distribucion de los indices de desempeño de manera normalizada en el espacio de trabajo, apreciando los cambios de estos respecto a la solución inicial
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[height = 0.4\textheight,width=1\textwidth]{Cap4_DisenoBasico/Figura/Ga/Indices.eps}
+     \includegraphics[height = 0.04\textheight,width=0.7\textwidth]{Cap4_DisenoBasico/Figura/Ga/Colorbar.png}
+    \caption{Indices de desempeño en el espacio de trabjo}
+    \label{fig:optimization}
+\end{figure}

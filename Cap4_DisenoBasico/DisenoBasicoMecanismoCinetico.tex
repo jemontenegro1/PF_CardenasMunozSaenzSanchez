@@ -18,10 +18,11 @@ La matriz de rigidez para este elemento es dada por la siguiente matriz:
 En donde $T$ es la matriz de rotación del sistema coordenado global al sistema local del elemento, la cual está conformada por $T_{i}$ que es una matriz $3\times3$ de cosenos directores, $T^T$ simboliza la transpuesta de esta matriz, $k$ es la matriz de rigidez del elemento en el sistema global mientras que $k’$ su versión en el sistema local. 
 
 \begin{equation}
-    T = \left[ \begin{array}{ccc}
-        T_{i} & 0 & 0 \\
-        0 & T_{i} & 0 \\
-        0 & 0 & T_{i} \\
+    T = \left[ \begin{array}{cccc}
+        T_{i} & 0 & 0 & 0 \\
+        0 & T_{i} & 0 & 0 \\
+        0 & 0 & T_{i} & 0 \\
+        0 & 0 & 0 & T_{i}
     \end{array} \right]
 \end{equation}
 
@@ -39,7 +40,7 @@ Por consecuencia de la definición del elemento de marco espacial, una estructur
 
 Donde $\vec{U}$ es un vector que contiene los desplazamientos globales, tanto translaciones como angulares, de todos los nodos y $\vec{F}$ son las fuerzas y momentos globales aplicadas en cada nodo.
 
-Para el modelo del mecanismo en elementos finitos se hicieron dos modificaciones, con el facilitar el modelamiento del mismo. La primera modificación fue realizada en la base, que se transformó de una placa triangular con los vértices redondeados a una serie de tubos de rectangular que cumplan la disposición geométrica de la placa forma. La segunda modificación fue eliminar el sistema paralelo de dos ejes sobre el perfil, a solo haber un eje en paralelo con el perfil. Cabe resaltar que el sistema de accionamiento no fue considerado para este análisis.El procedimiento utilizado para el modelo fue obtenido de \cite{kattan2010matlab}.
+Para el modelo del mecanismo en elementos finitos se hicieron dos modificaciones, con el facilitar el modelamiento del mismo (Ver Figura \ref{fig:MecanismoDiscretizado}). La primera modificación fue realizada en la base, que se transformó de una placa triangular con los vértices redondeados a una serie de tubos de rectangular que cumplan la disposición geométrica de la placa forma. La segunda modificación fue eliminar el sistema paralelo de dos ejes sobre el perfil, a solo haber un eje en paralelo con el perfil. Cabe resaltar que el sistema de accionamiento no fue considerado para este análisis.El procedimiento utilizado para el modelo fue obtenido de \cite{kattan2010matlab}.
 
 \begin{figure}[hbt!]
     \centering
@@ -47,4 +48,21 @@ Para el modelo del mecanismo en elementos finitos se hicieron dos modificaciones
     \caption{Esquema de la discretización del mecanismo}
     \label{fig:MecanismoDiscretizado}
 \end{figure}
+\newpage
 
+El modelo manejo dos tipos de material, más específicamente el acero y el aluminio, esto con el objetivo de obtener pesos ligeros en los materiales que no presentan deformaciones significativas y resistencia en aquellos elementos críticos. Los valores utilizados para la simulación son los siguientes:
+
+\begin{longtable}{|c|c|c|c|}
+    \hline \rowcolor[gray]{0.85}
+    \textbf{Material} & \textbf{Densidad} & \textbf{Modulo de Elasticidad} & \textbf{Modulo de Cortante} \\ \rowcolor[gray]{0.85}
+     & $\rho$ [$kg/m^3$] & $E$ [$GPa$] & $G$ [$GPa$] \\ \hline
+     Acero & $7850.00$ & $200.00$ & $79.3$ \\ \hline
+     Aluminio & $2700.00$ & $69.00$ & $27.00$ \\ \hline
+     \caption{Lista de Materiales para el análisis de rigidez}
+\end{longtable}
+
+A partir de la discretización del mecanismo (ver Figura \ref{fig:MecanismoDiscretizado}) se establecieron 38 nodos distribuidos en 48 elementos que siguen la siguiente configuración:
+
+\input{Cap4_DisenoBasico/Tablas/ConfiguracionesElementos.tex}
+
+Posterior a esto, las condiciones de frontera utilizadas para resolver este sistema son los nodos $3$, $5$ y $7$ son nodos fijos, es decir, para el análisis no presentan ningún tipo de desplazamiento o empotrados. Además, por las condiciones normales de operación se pueden despreciar los efectos de las aceleraciones dentro del sistema; quedando fuerzas externas al mecanismo, las fuerzas de corte y los pesos de los mismos elementos.
