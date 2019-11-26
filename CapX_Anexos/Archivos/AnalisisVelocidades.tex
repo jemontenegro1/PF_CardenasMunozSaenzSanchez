@@ -1,0 +1,51 @@
+%\begin{lstlisting}[frame=single,language = matlab]
+
+\begin{lstlisting}[frame=single,language = matlab]
+syms R_b alpha_i L_A e L_D P_x P_y P_z
+syms theta_i beta_i q_i
+ii = [1;0;0];
+
+OOi = R_b*Rz(alpha_i)*ii;
+OiAi= L_A*Rz(alpha_i+theta_i)*ii;
+AiBi= e*Rz(alpha_i+theta_i+pi)*Ry(beta_i-pi/2)*ii;
+BiCi= q_i*Rz(alpha_i+theta_i+pi)*Ry(beta_i)*ii;
+OP = [P_x P_y P_z].';
+PCi = L_D*Rz(alpha_i+theta_i)*ii;
+
+syms dtheta_i dbeta_i dq_i
+syms dP_x dP_y dP_z
+
+vOiAi= dtheta_i*diff(OiAi,theta_i);
+vAiBi= dtheta_i*diff(AiBi,theta_i) + dbeta_i*diff(AiBi,beta_i);
+vBiCi= dq_i*diff(BiCi,q_i) + dtheta_i*diff(BiCi,theta_i) ...
+    + dbeta_i*diff(BiCi,beta_i);
+vOP = [dP_x dP_y dP_z].';
+vPCi = dtheta_i*diff(PCi,theta_i);
+
+eqn1 = vOiAi + vAiBi + vBiCi == vOP + vPCi;
+disp(eqn1);
+
+%% Calculo de dtheta_i
+Sti = -[-sin(alpha_i + theta_i); cos(alpha_i + theta_i); 0]...
+    /(L_D - L_A + q_i*cos(beta_i) + e*sin(beta_i));
+disp(Sti);
+Dtheta_i = simplify(Sti.'*(vOiAi + vAiBi + vBiCi - vPCi)) == ...
+    simplify(Sti.'*vOP);
+disp(Dtheta_i);
+
+%% Calculo de dbeta_i
+Sbi = diff(BiCi,beta_i)/q_i^2;
+disp(Sbi);
+Dbeta_i = simplify(Sbi.'*(vOiAi + vAiBi + vBiCi - vPCi)) == ...
+    simplify(Sbi.'*vOP);
+disp(Dbeta_i);
+
+%% Calculo de dq_i
+Si = diff(BiCi,q_i);
+Sbi = diff(BiCi,beta_i)/q_i^2;
+Si = Si - e*Sbi;
+disp(Si);
+Dq_i = simplify(Si.'*(vOiAi + vAiBi + vBiCi - vPCi)) == ...
+    simplify(Si.'*vOP);
+disp(Dq_i);
+\end{lstlisting}

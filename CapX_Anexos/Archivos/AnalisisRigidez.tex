@@ -1,0 +1,197 @@
+\begin{lstlisting}[frame=single,language = matlab]
+clear; clc;
+
+load('DiscreteWorkspace.mat','P');
+
+Lr = [70,40,5,...       %[Steel,ProfileBase]
+      80,45,...         %[Aluminium,ProfileRevoluteAB1]
+      20,80,...         %[Aluminium,ProfileRevoluteAB2]
+      45,45,...         %[Aluminium,ProfileRevoluteBC]
+      16,...            %[Steel,ProfileShaft]
+      45,45,...         %[Aluminium,ProfileShaftSupport]
+      150,100,10,...    %[Steel,ProfileTeeBeam]
+      60,60,...         %[Aluminium,ProfileRevoluteD]
+      60,60 ...         %[Aluminium,ProfileRevoluteDP]
+      ];
+
+[Up_int, Up1] = StiffnessMechanismMilling( P, Lr );
+
+disp(Up_int);
+
+
+
+Lr = [50,150,10,...       %[Steel,ProfileBase]
+      80,45,...         %[Aluminium,ProfileRevoluteAB1]
+      20,80,...         %[Aluminium,ProfileRevoluteAB2]
+      30,45,...         %[Aluminium,ProfileRevoluteBC]
+      25.4,...          %[Steel,ProfileShaft]
+      45,45,...         %[Aluminium,ProfileShaftSupport]
+      150,100,15,...    %[Steel,ProfileTeeBeam]
+      70,70,...         %[Aluminium,ProfileRevoluteD]
+      50,70 ...         %[Aluminium,ProfileRevoluteDP]
+      ];
+
+figure(1);
+[Up_int, Up2] = StiffnessMechanismMilling( P, Lr, true );
+
+disp(Up_int);
+
+figure(2);
+histogram(Up1); hold on;
+histogram(Up2); hold off;
+legend('Initial Parameters','Try Parameters');
+figure(3);
+histogram(Up2);
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,language = matlab]
+function [Up_int, Up] = StiffnessMechanismMilling( P, Lr, plotit )
+n = length(P(1,:));
+
+% Dimension static
+Rb = 675; LA = 50; LD = 249; e = 0;
+L  = [Rb,LA,LD,e];
+Lc = 40; Le = 27; Ql = 50; Lab = 40; Qmax = 1047.6;
+Alpha = deg2rad([0 120 240]);
+
+% configuration matlab
+[Theta, Q, Beta] = CinematicaInversaRRPRR(L,...
+    [1 0 0;0 1 0;0 0 -1]*P(:,1));
+Nodes = zeros(3,38);
+% fixed nodes
+Ai = Rb*[cos(Alpha);sin(Alpha);0*Alpha];
+Nodes(:,2:7) = [Ai(:,1),(Ai(:,1)+Ai(:,2))/2,...
+    Ai(:,2),(Ai(:,2)+Ai(:,3))/2,Ai(:,3),(Ai(:,3)+Ai(:,1))/2,];
+% moving nodes
+St = [cos(Alpha+Theta);sin(Alpha+Theta);0*Alpha];
+Stb1 = [cos(Alpha+Theta).*cos(Beta-pi/2)
+    sin(Alpha+Theta).*cos(Beta-pi/2)
+    sin(Beta-pi/2)];
+Stb2 = [cos(Alpha+Theta).*cos(Beta)
+    sin(Alpha+Theta).*cos(Beta)
+    sin(Beta)];
+Nodes(:, 8:10) = Ai + LA*St;
+Nodes(:,11:13) = Nodes(:, 8:10) + [0 0 -Lab]'*[1 1 1];
+Nodes(:,14:16) = Nodes(:,11:13) - Lc*Stb1;
+Nodes(:,17:19) = Nodes(:,14:16) + ([1 1 1]'*(Q-Ql)).*Stb2;
+Nodes(:,20:22) = Nodes(:,17:19) - Le*Stb1;
+Nodes(:,23:25) = Nodes(:,20:22) + Ql*Stb2;
+Nodes(:,26:28) = Nodes(:,20:22) - ([1 1 1]'*(Q-Ql)).*Stb2;
+Nodes(:,29:31) = Nodes(:,23:25) + (Lc+Le)*Stb1;
+Nodes(:,32)    = P(:,1) - [0 0 Lab]';
+Nodes(:,33:35) = Nodes(:,26:28) - (Qmax-Q).*Stb2;
+Nodes(:,36:38) = Nodes(:,33:35) + Le*Stb1;
+Nodes = Nodes/1000;
+
+% Frames = [i,j]
+Frames =[   1 2;1 3;1 4;1 5;1 6;1 7;2 3;3 4;4 5;...
+    5 6;6 7;7 2;...         %[Steel,ProfileBase], 1:12
+    2 8;4 9;6 10;...        %[Aluminium,ProfileRevoluteAB1], 13:15
+    8 11;9 12;10 13;...     %[Aluminium,ProfileRevoluteAB2], 16:18
+    11 14;12 15;13 16;...   %[Aluminium,ProfileRevoluteBC],  19:21
+    14 17;15 18;16 19;...   %[Steel,ProfileShaft],           22:24
+    17 20;18 21;19 22;...   %[Aluminium,ProfileShaftSupport],25:27
+    20 23;21 24;22 25;20 26;21 27;22 28;... %[Steel,ProfileTeeBeam], 28:33
+    23 29;24 30;25 31;...   %[Aluminium,ProfileRevoluteD],   34:36
+    29 32;30 32;31 32;...   %[Aluminium,ProfileRevoluteDP],  37:39
+    26 33;27 34;28 35;...   %[Steel,ProfileTeeBeam],         40:42
+    33 36;34 37;35 38;...   %[Aluminium,ProfileShaftSupport],43:45
+    14 36;15 37;16 38;...   %[Steel,ProfileShaft],           46:48
+    ];
+% Material = [rho, E, G];
+Aluminum = [2700, 69.0E9, 27.0E9];
+Steel    = [7850,200.0E9, 79.3E9];
+% Profiles = [A, Ix, Iy, Iz, J]
+ProfileBase = PropertiesTubularRectangle(Lr(1),Lr(2),Lr(3));%(70,40,5);
+ProfileRevoluteAB1 = PropertiesRectangle(Lr(4),Lr(5));%(80,45);
+ProfileRevoluteAB2 = PropertiesRectangle(Lr(6),Lr(7));%(20,80);
+ProfileRevoluteBC  = PropertiesRectangle(Lr(8),Lr(9));%(45,45);
+ProfileShaft       = PropertiesCircle(Lr(10));%(16);
+ProfileShaftSupport= PropertiesRectangle(Lr(11),Lr(12));%(45,45);
+ProfileTeeBeam     = PropertiesTeeBeam(Lr(13),Lr(14),Lr(15));%(150,100,10);
+ProfileRevoluteD   = PropertiesRectangle(Lr(16),Lr(17));%(60,60);
+ProfileRevoluteDP  = PropertiesRectangle(Lr(18),Lr(19));%(60,60);
+% Frames Specifications = [rho, E, G, A, Ix, Iy, Iz, J]
+FramesSpecification = zeros(length(Frames(:,1)),8);
+FramesSpecification( 1:12,:) = ones(12,1)*[Steel,ProfileBase];
+FramesSpecification(13:15,:) = ones( 3,1)*[Steel,ProfileRevoluteAB1];
+FramesSpecification(16:18,:) = ones( 3,1)*[Steel,ProfileRevoluteAB2];
+FramesSpecification(19:21,:) = ones( 3,1)*[Steel,ProfileRevoluteBC];
+FramesSpecification(22:24,:) = ones( 3,1)*[Steel,ProfileShaft];
+FramesSpecification(25:27,:) = ones( 3,1)*[Aluminum,ProfileShaftSupport];
+FramesSpecification(28:33,:) = ones( 6,1)*[Steel,ProfileTeeBeam];
+FramesSpecification(34:36,:) = ones( 3,1)*[Steel,ProfileRevoluteD];
+FramesSpecification(37:39,:) = ones( 3,1)*[Steel,ProfileRevoluteDP];
+FramesSpecification(40:42,:) = ones( 3,1)*[Steel,ProfileTeeBeam];
+FramesSpecification(43:45,:) = ones( 3,1)*[Aluminum,ProfileShaftSupport];
+FramesSpecification(46:48,:) = ones( 3,1)*[Steel,ProfileShaft];
+
+W = zeros(3,length(Frames(:,1)));
+for ii = 1:length(Frames(:,1))
+    W(:,ii) = SpaceFrameElementWeight(FramesSpecification(ii,:),...
+        Nodes(:,Frames(ii,1)),Nodes(:,Frames(ii,2)));
+end
+
+Up = zeros(n,1);
+for ii = 1:n
+    [Theta, Q, Beta] = CinematicaInversaRRPRR(L,...
+        [1 0 0;0 1 0;0 0 -1]*P(:,ii));
+    % fixed nodes
+    Ai = Rb*[cos(Alpha);sin(Alpha);0*Alpha];
+    Nodes(:,2:7) = [Ai(:,1),(Ai(:,1)+Ai(:,2))/2,...
+        Ai(:,2),(Ai(:,2)+Ai(:,3))/2,Ai(:,3),(Ai(:,3)+Ai(:,1))/2,];
+    % moving nodes
+    St = [cos(Alpha+Theta);sin(Alpha+Theta);0*Alpha];
+    Stb1 = [cos(Alpha+Theta).*cos(Beta-pi/2)
+        sin(Alpha+Theta).*cos(Beta-pi/2)
+        sin(Beta-pi/2)];
+    Stb2 = [cos(Alpha+Theta).*cos(Beta)
+        sin(Alpha+Theta).*cos(Beta)
+        sin(Beta)];
+    Nodes(:, 8:10) = Ai + LA*St;
+    Nodes(:,11:13) = Nodes(:, 8:10) + [0 0 -Lab]'*[1 1 1];
+    Nodes(:,14:16) = Nodes(:,11:13) - Lc*Stb1;
+    Nodes(:,17:19) = Nodes(:,14:16) + ([1 1 1]'*(Q-Ql)).*Stb2;
+    Nodes(:,20:22) = Nodes(:,17:19) - Le*Stb1;
+    Nodes(:,23:25) = Nodes(:,20:22) + Ql*Stb2;
+    Nodes(:,26:28) = Nodes(:,20:22) - ([1 1 1]'*(Q-Ql)).*Stb2;
+    Nodes(:,29:31) = Nodes(:,23:25) + (Lc+Le)*Stb1;
+    Nodes(:,32)    = P(:,ii) - [0 0 Lab]';
+    Nodes(:,33:35) = Nodes(:,26:28) - (Qmax-Q).*Stb2;
+    Nodes(:,36:38) = Nodes(:,33:35) + Le*Stb1;
+    Nodes = Nodes/1000;
+    
+    K = zeros(6*length(Nodes(1,:)));
+    Fe = zeros(6*length(Nodes(1,:)),1);
+    for jj = 1:length(Frames(:,1))
+        kp = SpaceFrameElementStiffness(FramesSpecification(jj,:),...
+            Nodes(:,Frames(jj,1)),Nodes(:,Frames(jj,2)));
+        K = SpaceFrameAssemble(K,kp,Frames(jj,1),Frames(jj,2));
+        Fe = SpaceFrameElementAppliedForceinCG(Fe,W(:,jj),...
+            Nodes(:,Frames(jj,1)),Nodes(:,Frames(jj,2)),...
+                Frames(jj,1),Frames(jj,2));
+    end
+    Fe(6*32-5:6*32) = Fe(6*32-5:6*32) + ...
+        2*[783 0 0 783*100/1000 0 783*18/1000]';
+    fe = Fe([1:6*2,6*4-5:6*4,6*6-5:6*6,6*8-5:end]);
+    k  = K([1:6*2,6*4-5:6*4,6*6-5:6*6,6*8-5:end],...
+        [1:6*2,6*4-5:6*4,6*6-5:6*6,6*8-5:end]);
+    u  = pinv(k)*fe;
+    U  = zeros(size(Fe));
+    U([1:6*2,6*4-5:6*4,6*6-5:6*6,6*8-5:end]) = u;
+    Up(ii) = norm(U(6*32-5:6*32-3)*1000);
+    if(exist('plotit','var'))
+        if(plotit)
+            SpaceFrameSystemPlot(Nodes,Frames,U);
+            pause(0.01);
+        end
+    end
+end
+Up_mean = mean(Up);
+Up_vol  = std(Up)/Up_mean;
+Up_skw  = moment(Up,3)/std(Up)^3;
+Up_kurt = moment(Up,4)/std(Up)^4 - 3;
+Up_int  = 1/([1 -Up_mean -0.1*Up_mean -0.1*Up_mean]*[Up_mean Up_vol...
+    Up_skw Up_kurt]'); 
+end
+\end{lstlisting}

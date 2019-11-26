@@ -66,3 +66,17 @@ A partir de la discretización del mecanismo (ver Figura \ref{fig:MecanismoDiscr
 \input{Cap4_DisenoBasico/Tablas/ConfiguracionesElementos.tex}
 
 Posterior a esto, las condiciones de frontera utilizadas para resolver este sistema son los nodos $3$, $5$ y $7$ son nodos fijos, es decir, para el análisis no presentan ningún tipo de desplazamiento o empotrados. Además, por las condiciones normales de operación se pueden despreciar los efectos de las aceleraciones dentro del sistema; quedando fuerzas externas al mecanismo, las fuerzas de corte y los pesos de los mismos elementos.
+
+Para el caso de las fuerzas aplicadas en los centro de gravedad de los elementos, $f_{cg}$, se trasladan a los nodos, $f_{n}$, utilizando la metodología de trabajo de deformación, y su expresión para esto es la siguiente:
+
+\begin{equation}
+    f_{n} = T^T \xi T_{i} f_{cg}
+\end{equation}
+
+en donde:
+\begin{equation}
+    \xi = \left[\begin{array}{c c c}
+            1/2&0&0\\0&1/2&0\\0&0&1/2\\0&0&0\\L/12&0&0\\0&L/12&0\\
+            1/2&0&0\\0&1/2&0\\0&0&1/2\\0&0&0\\-L/12&0&0\\0&-L/12&0
+    \end{array} \right];
+\end{equation}

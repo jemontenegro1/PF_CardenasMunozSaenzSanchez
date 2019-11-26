@@ -1,0 +1,65 @@
+% \begin{lstlisting}[frame=single,language = matlab]
+\begin{lstlisting}[frame=single,language = matlab]
+syms R_b alpha_i L_A e L_D P_x P_y P_z
+syms theta_i beta_i q_i
+
+ii = [1;0;0];
+
+OOi = R_b*Rz(alpha_i)*ii;
+OiAi= L_A*Rz(alpha_i+theta_i)*ii;
+AiBi= e*Rz(alpha_i+theta_i+pi)*Ry(beta_i-pi/2)*ii;
+BiCi= q_i*Rz(alpha_i+theta_i+pi)*Ry(beta_i)*ii;
+OP  = [P_x P_y P_z].';
+PCi = L_D*Rz(alpha_i+theta_i)*ii;
+
+syms dtheta_i dbeta_i dq_i
+syms dP_x dP_y dP_z
+
+vOiAi= dtheta_i*diff(OiAi,theta_i);
+vAiBi= dtheta_i*diff(AiBi,theta_i) + dbeta_i*diff(AiBi,beta_i);
+vBiCi= dq_i*diff(BiCi,q_i) + dtheta_i*diff(BiCi,theta_i)...
+    + dbeta_i*diff(BiCi,beta_i);
+vOP  = [dP_x dP_y dP_z].';
+vPCi = dtheta_i*diff(PCi,theta_i);
+
+syms ddtheta_i ddbeta_i ddq_i
+syms ddP_x ddP_y ddP_z
+
+aOiAit= ddtheta_i*diff(vOiAi,dtheta_i);
+aOiAin= dtheta_i*diff(vOiAi,theta_i);
+aOiAi = aOiAit + aOiAin;
+
+aAiBit= ddtheta_i*diff(vAiBi,dtheta_i) + ddbeta_i*diff(vAiBi,dbeta_i);
+aAiBin= dtheta_i*diff(vAiBi,theta_i) + dbeta_i*diff(vAiBi,beta_i);
+aAiBi = (aAiBit + aAiBin);
+
+aBiCit= ddtheta_i*diff(vBiCi,dtheta_i) ... 
+    + ddbeta_i*diff(vBiCi,dbeta_i) + ddq_i*diff(vBiCi,dq_i);
+aBiCin= dtheta_i*diff(vBiCi,theta_i) + dbeta_i*diff(vBiCi,beta_i) ...
+    + dq_i*diff(vBiCi,q_i);
+aBiCi = simplify(aBiCit + aBiCin);
+
+aOP  = [ddP_x ddP_y ddP_z].';
+
+aPCit = ddtheta_i*diff(vPCi,dtheta_i);
+aPCin = dtheta_i*diff(vPCi,theta_i);
+aPCi  = aPCit + aPCin;
+
+eqn1 = simplify(aOiAi + aAiBi + aBiCi) == aOP + aPCi;
+
+Sti = -vOiAi/dtheta_i/L_A/(L_D - L_A + q_i*cos(beta_i)...
+    + e*sin(beta_i));
+DDtheta_i = simplify(Sti.'*(aOiAit + aAiBit + aBiCit - aPCit)) == ... 
+    simplify(Sti.'*aOP) - simplify(Sti.'*(aOiAin + aAiBin + aBiCin ...
+    - aPCin));
+    
+Sbi = diff(BiCi,beta_i)/q_i^2;
+DDbeta_i = simplify(Sbi.'*(aOiAit + aAiBit + aBiCit - aPCit)) == ... 
+    simplify(Sbi.'*aOP) - simplify(Sbi.'*(aOiAin + aAiBin + aBiCin ...
+    - aPCin));
+    
+Si = diff(BiCi,q_i);
+Si = Si - e*Sbi;
+DDq_i = simplify(Si.'*(aOiAit + aAiBit + aBiCit - aPCit)) == ...
+simplify(Si.'*aOP) - simplify(Si.'*(aOiAin + aAiBin + aBiCin - aPCin));
+\end{lstlisting}

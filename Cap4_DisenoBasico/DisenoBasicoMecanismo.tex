@@ -218,6 +218,22 @@ Para la validación de las expresiones obtenidas en la sección anterior, se est
     \caption{Esquema del modelo en SimMechanics}
 \end{figure}
 
+Para la comparación de los modelos se definió una curva a lo largo de los vértices del espacio de trabajo con unos perfiles de velocidad trapezoidales con velocidades máximas de $40~mm/min$.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width = \textwidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Espacio_De_Trabajo.png}
+    \caption{Trayectoria seguida}
+    \label{fig:Trayectoria}
+\end{figure}
+
+\begin{figure}[hb!]
+    \centering
+    \includegraphics[width = \textwidth]{Cap4_DisenoBasico/Figura/ComparativoSimMechanics/Perfil_de_velocidades.png}
+    \caption{Perfil de velocidades}
+    \label{fig:PerfilesdeVelocidad}
+\end{figure}
+
 \begin{figure}
     \centering
     \begin{subfigure}{0.45\textwidth}
@@ -395,5 +411,24 @@ El dimensionamiento fue realizado por un método iterativo se suponían unas dim
     \caption{Parámetros iniciales y finales para probar el mecanismo}
 \end{longtable}
 
-Luego de establecer los parámetros, prosiguió a evaluar bajo las condiciones de operación los desplazamientos alcanzados por el efector a lo largo del espacio de trabajo discretizado en una nube de puntos. Generando el siguiente histograma, ver Figura \ref{fig:Comparacion}, en donde se puede observar la distribución de los desplazamientos de $P$, mostrando que los parámetros iniciales presenta una alta variabilidad a lo largo del espacio de trabajo mientras que los parámetros finales presenta una baja variabilidad y un promedio mucho más bajo que el de los iniciales.
+Luego de establecer los parámetros, prosiguió a evaluar bajo las condiciones de operación los desplazamientos alcanzados por el efector a lo largo del espacio de trabajo discretizado en una nube de puntos. Generando el siguiente histograma, ver Figura \ref{fig:ComparacionParametros}, en donde se puede observar la distribución de los desplazamientos de $P$, mostrando que los parámetros iniciales presenta una alta variabilidad a lo largo del espacio de trabajo mientras que los parámetros finales presenta una baja variabilidad y un promedio mucho más bajo que el de los iniciales.
 
+\begin{figure}[hbt!]
+    \centering
+    \includegraphics[width = 0.75 \textwidth]{Cap4_DisenoBasico/Figura/ComparacionRigidez/DistribucionesDesplazamientos.eps}
+    \caption{Comparación del comportamiento de la rigidez a lo largo del espacio de trabajo}
+    \label{fig:ComparacionParametros}
+\end{figure}
+
+\begin{figure}[hbt!]
+    \centering
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparacionRigidez/ParametrosIniciales.eps}
+        \caption{Parámetros iniciales}
+    \end{subfigure}
+    \begin{subfigure}{0.45\textwidth}
+        \includegraphics[width=\linewidth]{Cap4_DisenoBasico/Figura/ComparacionRigidez/ParametrosFinales.eps}
+        \caption{Parámetros finales}
+    \end{subfigure}
+    \caption{Comparación del mecanismo en una posición}
+\end{figure}

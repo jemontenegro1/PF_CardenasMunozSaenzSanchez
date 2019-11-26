@@ -157,9 +157,9 @@ Donde: \\
 ZE= 191 MPa: Coeficiente elástico.\\
 ZR=1: Factor de condición superficial.\\
 I=0.138: Factor geométrico de resistencia superficial.
+
 \begin{center}
 $\sigma_{c}$ =274.34 MPa.
-
 \end{center}
 
 
@@ -168,10 +168,12 @@ Igualmente, que en fatiga flexionaste se busca un factor de seguridad que garant
     \sigma_{c,perm}=S_{c}\cdot \frac{Z_{n}Z_{w}}{Y_{\theta}Y_{z}}
     \label{Eq:8}
 \end{equation}
+
 Donde:\\ 
 Sc=1100 MPA: Esfuerzo superficial permisible.\\
 ZW=1: Factor de relación de dureza.\\
 ZN=1: Factor de vida de ciclos de esfuerzos.\\
+
 \begin{center}
     $\sigma_{c, permi}$= 733.33 MPa
 \end{center}
@@ -189,7 +191,9 @@ FSc: factor de seguridad AGMA.
 \end{center}
 
 
-Los calculos se repitieron para cada engranaje, tanto fatiga flexiónate como superficial, con el fin de verificar que todos los engranajes resistieran a los modos de falla evaluados, los resultado se encuentra en las tablas \ref{table:fatiga_flexionante}, y y z
+Los calculos se repitieron para cada engranaje, tanto fatiga flexiónate como superficial, con el fin de verificar que todos los engranajes resistieran a los modos de falla evaluados, los resultado se encuentra en las tablas \ref{table:fatiga_flexionante}, \ref{table:fatiga-F_FS}, \ref{table:fatiga_flec2}, \ref{table:fatiga_Superficial2}.
+
+
 
 \input{Cap5_DisenoDetallado/Tablas/Fatiga_flexionante.tex}
 
@@ -197,28 +201,66 @@ Los calculos se repitieron para cada engranaje, tanto fatiga flexiónate como su
 \input{Cap5_DisenoDetallado/Tablas/Fatiga_superficial.tex}
 
 \input{Cap5_DisenoDetallado/Tablas/superficie_FS.tex}
+
+Para la construcción de la caja de transmisión, se decidió implementar una caja de engranajes flotantes, esto quiere decir que todas las parejas de engranajes están en contacto pero sin transmisión de potencia, esto ocurre hasta que por medio de un sincronizador se selecciona la relación de transmisión a la que se desea trabajar, este sincronizador se desplaza y une por medio de un engranaje tipo corona interna, un engranaje rectos ubicado a un costado de los engranajes helicoidales con un engranaje que se encuentra fijo en el eje, logrando así la transmisión de par, con solamente 2 pares de engranajes, ver figura \ref{fig:Caja_ejes}. 
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width =0.7\textwidth]{Cap5_DisenoDetallado/Figuras/Caja_ejes.png}
+    \caption{Esquema sistema de transmisión}{Fuente:Elaboración propia}
+    \label{fig:Caja_ejes}
+\end{figure}
+
+%aqui va la foto que se llama caja ejes
+La representación final de el sistema de transmisión, se muestra en la figura \ref{fig:representacion}. 
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width =0.6\textwidth]{Cap5_DisenoDetallado/Figuras/representación.png}
+    \caption{Vista explosionada sistema final}{Fuente:Elaboración propia}
+    \label{fig:representacion}
+\end{figure}
+
+% aqui va representación
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width =0.8\textwidth]{Cap5_DisenoDetallado/Figuras/eje_intermedio.png}
+    \caption{Exploxionado eje intermedio}{Fuente:Elaboración propia}
+    \label{fig:eje_inter}
+\end{figure}
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width =0.8\textwidth]{Cap5_DisenoDetallado/Figuras/eje_de_salida.png}
+    \caption{Exploxionado eje de salida}{Fuente:Elaboración propia}
+    \label{fig:Eje_salida}
+\end{figure}
+En la figura \ref{fig:eje_inter} se muestra en mas detalle el eje secundario o intermedio, mientras que en la figura \ref{fig:Eje_salida}, se muestra el eje de salida con los engranajes flotantes.
+
+
+%eje intermedio
+
+\newpage
+~
 \newpage
 
 \subsection{Planos}
-\begin{figure}[ht]
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width =0.65\textwidth]{Cap5_DisenoDetallado/Figuras/motor_electrico.PDF}
+    \includegraphics[width =0.8\textwidth]{Cap5_DisenoDetallado/Figuras/motor_electrico.PDF}
     \caption{Plano del Servo motor}{Fuente:Elaboración propia}
     \label{fig:Motor_servo}
 \end{figure}
-
-\begin{figure}[ht]
+\newpage
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width =0.65\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
+    \includegraphics[width =0.8\textwidth]{Cap5_DisenoDetallado/Figuras/engranaje_1.PDF}
     \caption{Plano del engranaje}{Fuente:Elaboración propia}
     \label{fig:Planos_engranaje}
 \end{figure}
-
-
-\begin{figure}[ht]
+\newpage
+\begin{figure}[ht!]
     \centering
-    \includegraphics[width =0.65\textwidth]{Cap5_DisenoDetallado/Figuras/eje2.PDF}
+    \includegraphics[width =0.8\textwidth]{Cap5_DisenoDetallado/Figuras/eje2.PDF}
     \caption{Plano del eje}{Fuente:Elaboración propia}
     \label{fig:Planos_eje}
 \end{figure}
-

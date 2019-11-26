@@ -1,0 +1,59 @@
+\begin{lstlisting}[frame=single,language = matlab]
+syms R_b alpha_i L_A e L_D P_x P_y P_z
+syms theta_i beta_i q_i
+
+ii = [1;0;0];
+
+OOi = R_b*Rz(alpha_i)*ii;
+OiAi= L_A*Rz(alpha_i+theta_i)*ii;
+AiBi= e*Rz(alpha_i+theta_i+pi)*Ry(beta_i-pi/2)*ii;
+BiCi= q_i*Rz(alpha_i+theta_i+pi)*Ry(beta_i)*ii;
+OP  = [P_x P_y P_z].';
+PCi = L_D*Rz(alpha_i+theta_i)*ii;
+
+eqn1 = OOi + OiAi + AiBi + BiCi == OP + PCi;
+
+syms v phi
+OiP  = v*Rz(alpha_i+theta_i)*Ry(phi)*ii;
+eqn2 = OiP == OP - OOi;
+eqn2 = children(eqn2);
+eqn2 = theta_i == atan(eqn2{2}(2)/eqn2{1}(2)) - alpha_i;
+disp(eqn2);
+
+syms M %xi
+% AiCi = M*Rz(alpha_i+theta_i)*Ry(xi)*ii;
+eqn3 = OOi + OiAi - (OP + PCi);
+eqn3 = M == simplify(eqn3.'*eqn3);
+disp(eqn3);
+
+eqn4 = q_i == sqrt(M - e^2);
+disp(eqn4);
+
+eqn5 = expand(eqn1(3));
+disp(eqn5);
+syms u
+eqn5 = subs(eqn5, [cos(beta_i) sin(beta_i)], [2*u 1-u^2]/(1+u^2));
+eqn5 = simplify(expand(eqn5)*(1+u^2));
+eqn5 = children(eqn5);
+eqn5 = eqn5(1);
+disp(eqn5);
+eqn5 = children(eqn5);
+eqn5 = coeffs(eqn5(1) - eqn5(2),u);
+disp(eqn5);
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,language = matlab]
+function R = Rz(angle)
+    R = [   cos(angle) -sin(angle) 0
+            sin(angle)  cos(angle) 0
+            0           0          1];
+end
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single,language = matlab]
+function R = Ry(angle)
+    R = [   cos(angle) 0 sin(angle)
+            0          1    0
+           -sin(angle) 0 cos(angle)];
+end
+\end{lstlisting}

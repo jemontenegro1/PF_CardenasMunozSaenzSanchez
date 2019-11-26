@@ -67,6 +67,11 @@
     \renewcommand{\listfigurename}{Lista de Figuras}
     \addcontentsline{toc}{chapter}{\numberline{}Lista de Figuras}
     \listoffigures
+    \newpage
+    \newpage
+    %%%%%   Resumen Ejecutivo    %%%%%
+    \addcontentsline{toc}{chapter}{\numberline{}Resumen Ejecutivo}
+    \input{Cap0_Titulo/ResumenEjecutivo.tex}
     
     %%%%%   Capitulo 1 : Formulacion del Proyecto    %%%%%
     \input{Cap1_FormulaciondelProyecto/FormulaciondelProyecto}
@@ -83,12 +88,15 @@
     %%%%%   Capitulo 5 : Diseño Basico    %%%%%
     \input{Cap5_DisenoDetallado/DisenoDetallado.tex}
     
+    %%%%%   Capitulo 6 : Analisis Economico    %%%%%
+    \input{Cap6_AnalisisEconomicos/AnalisisEconomico.tex}
+    
     %%%%%   Capitulo X : Bibliografia    %%%%%
     \addcontentsline{toc}{chapter}{\numberline{}Bibliografia} 
     \bibliography{Bibliografia}
     %
     %\setcounter{chapter}{0}
-    \renewcommand{\thechapter}{\Alph{chapter}}
+    %\renewcommand{\thechapter}{\Alph{chapter}}
     %%%%%   Capitulo X : Anexos    %%%%%
     \input{CapX_Anexos/Anexos.tex}
 \end{document}

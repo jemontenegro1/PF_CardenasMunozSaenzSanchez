@@ -1,0 +1,30 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage[table,xcdraw]{xcolor}
+% If you use beamer only pass "xcolor=table" option, i.e. \documentclass[xcolor=table]{beamer}
+\begin{longtable}{|c|c|c|c|c|c|}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\multicolumn{2}{|c|}{\cellcolor[HTML]{C0C0C0}\begin{tabular}[c]{@{}c@{}}GASTOS\\   GENERALES\end{tabular}}                                                                                   & cantidad & Valor     & \begin{tabular}[c]{@{}c@{}}Factor \\ prestacional\end{tabular} & AÑO 1          \\ \hline
+                                                                                      & \begin{tabular}[c]{@{}c@{}}Gerente\\   administrativo\end{tabular}                                   & 1        & 4.000.000 & 5.600.000                                                      & 67.200.000     \\ \cline{2-6} 
+                                                                                      & Contabilidad                                                                                         & 1        & 2.000.000 & 2.800.000                                                      & 33.600.000     \\ \cline{2-6} 
+                                                                                      & Secretaria                                                                                           & 1        & 900.000   & 1.260.000                                                      & 15.120.000     \\ \cline{2-6} 
+\multirow{-4}{*}{\begin{tabular}[c]{@{}c@{}}PERSONAL\\   ADMINISTRATIVO\end{tabular}} & Servicios generales                                                                                  & 1        & 900.000   & 1.260.000                                                      & 15.120.000     \\ \hline
+                                                                                      & \begin{tabular}[c]{@{}c@{}}Ingeniero\\   diseño\end{tabular}                                         & 1        & 5.000.000 & 7.000.000                                                      & 84.000.000     \\ \cline{2-6} 
+                                                                                      & Operarios                                                                                            & 2        & 4.000.000 & 5.600.000                                                      & 67.200.000     \\ \cline{2-6} 
+\multirow{-3}{*}{\begin{tabular}[c]{@{}c@{}}PERSONAL\\   OPERACIÓN\end{tabular}}      & Almacen-Despacho                                                                                     & 1        & 1.200.000 & 1.680.000                                                      & 20.160.000     \\ \hline
+                                                                                      & \begin{tabular}[c]{@{}c@{}}Depreciacion\\   maquinaria\end{tabular}                                  &          &           & 310.406                                                        & 3.724.869      \\ \cline{2-6} 
+\multirow{-2}{*}{\begin{tabular}[c]{@{}c@{}}OTROS\\   GASTOS OPERACIÓN\end{tabular}}  & Insumos                                                                                              &          &           & 1.260.000                                                      & 15.120.000     \\ \hline
+                                                                                      & Arriendo                                                                                             & 1        & 4.500.000 & 4.500.000                                                      & 54.000.000     \\ \cline{2-6} 
+                                                                                      & \begin{tabular}[c]{@{}c@{}}Servicios publicos \\ (Luz, agua,intenet\\ , vigilancia)\end{tabular}     &          & 1.500.000 & 1.500.000                                                      & 18.000.000     \\ \cline{2-6} 
+\multirow{-3}{*}{OFICJNA}                                                             & \begin{tabular}[c]{@{}c@{}}Mantenimiento \\ general\\   (Polizas, \\ mant oficina, etc)\end{tabular} &          & 600.000   & 600.000                                                        & 7.200.000      \\ \hline
+                                                                                      & \begin{tabular}[c]{@{}c@{}}GMF\\   (4x1000)\end{tabular}                                             &          &           & 161.280                                                        & 1.935.360      \\ \cline{2-6} 
+\multirow{-2}{*}{FINANCIEROS}                                                         & Gastos bancarios                                                                                     &          &           & 44.352                                                         & 532.224        \\ \hline
+Impuestos                                                                             & Industria y comercio                                                                                 &          &           & 387.072                                                        & 4.644.864      \\ \hline
+Total                                                                                 &                                                                                                      &          &           & 33.963.109,75                                                  & 407.557.317,02 \\ \hline
+\caption{Opex}{Fuente:Elaboracion Propia}
+\label{table:Opex}
+
+
+\end{longtable}
+
